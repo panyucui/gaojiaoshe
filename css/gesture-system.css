@@ -1,0 +1,297 @@
+/**
+ * Gesture System CSS - iOS 手势交互样式
+ * 文件版本: v2.0
+ * 升级日期: 2026-05-15
+ * 设计风格: 简约高级精致
+ */
+
+/* ===== 点击反馈 ===== */
+.ios-tap-feedback {
+    transition: transform var(--ios-duration-fast) var(--ios-ease), opacity var(--ios-duration-fast) var(--ios-ease);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ios-tap-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+}
+
+/* 涟漪效果 */
+.ios-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ios-ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 122, 255, 0.15);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s var(--ios-ease), height 0.4s var(--ios-ease), opacity 0.4s var(--ios-ease);
+    opacity: 0;
+}
+
+.ios-ripple:active::after {
+    width: 200%;
+    height: 200%;
+    opacity: 1;
+}
+
+/* ===== 下拉刷新 ===== */
+.ios-pull-refresh {
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ios-pull-refresh-indicator {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: top var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-pull-refresh-indicator.show {
+    top: 20px;
+}
+
+.ios-refresh-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--ios-gray-bg);
+    border-top-color: var(--ios-blue);
+    border-radius: 50%;
+    animation: ios-spin 1s linear infinite;
+}
+
+.ios-refresh-text {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+    margin-top: var(--ios-space-2);
+    text-align: center;
+}
+
+/* 下拉阈值提示 */
+.ios-pull-threshold {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ios-bg);
+    transform: translateY(-60px);
+    transition: transform var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-pull-threshold.ready {
+    transform: translateY(0);
+}
+
+/* ===== 滑动返回 ===== */
+.ios-swipe-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--ios-bg-secondary);
+    z-index: 50;
+    overflow: hidden;
+}
+
+.ios-swipe-back-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--ios-bg);
+    transition: transform var(--ios-duration-slow) var(--ios-ease);
+    will-change: transform;
+}
+
+.ios-swipe-back-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-swipe-back-page.swiping {
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Tab 滑动切换 ===== */
+.ios-tab-swipe-container {
+    overflow-x: hidden;
+    position: relative;
+}
+
+.ios-tab-content-wrapper {
+    display: flex;
+    transition: transform var(--ios-duration-slow) var(--ios-ease);
+    will-change: transform;
+}
+
+.ios-tab-content {
+    flex: 0 0 100%;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== 滚动优化 ===== */
+.ios-scroll {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.ios-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* ===== 长按反馈 ===== */
+.ios-longpress {
+    transition: transform var(--ios-duration-normal) var(--ios-ease), background-color var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-longpress.longpressing {
+    transform: scale(1.05);
+    background: var(--ios-gray-bg);
+}
+
+/* 长按菜单 */
+.ios-longpress-menu {
+    position: fixed;
+    background: var(--ios-bg-secondary);
+    border-radius: var(--ios-radius-3);
+    min-width: 200px;
+    padding: var(--ios-space-2) 0;
+    box-shadow: var(--ios-shadow-modal);
+    z-index: 300;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform var(--ios-duration-normal) var(--ios-ease), opacity var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-longpress-menu.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.ios-longpress-menu-item {
+    padding: var(--ios-space-3) var(--ios-space-4);
+    font-size: var(--ios-text-base);
+    color: var(--ios-text);
+    cursor: pointer;
+    transition: background-color var(--ios-duration-fast) var(--ios-ease);
+}
+
+.ios-longpress-menu-item:active {
+    background: var(--ios-gray-bg);
+}
+
+.ios-longpress-menu-item.destructive {
+    color: var(--ios-red);
+}
+
+/* ===== 手势禁用 ===== */
+.ios-no-swipe {
+    touch-action: pan-y;
+}
+
+.ios-no-scroll {
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* ===== 触摸反馈动画 ===== */
+@keyframes iosTouchFeedback {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.97);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.ios-touch-animate {
+    animation: iosTouchFeedback 150ms var(--ios-ease-out);
+}
+
+/* ===== 下拉刷新触发状态 ===== */
+.ios-pull-refresh-trigger {
+    position: relative;
+}
+
+.ios-pull-refresh-trigger::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--ios-bg) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--ios-duration-normal) var(--ios-ease);
+    z-index: 1;
+}
+
+.ios-pull-refresh-trigger.pulling::before {
+    opacity: 1;
+}
+
+/* ===== 滑动指示器 ===== */
+.ios-swipe-indicator {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ios-blue);
+    opacity: 0;
+    transition: opacity var(--ios-duration-fast) var(--ios-ease);
+}
+
+.ios-swipe-indicator.active {
+    opacity: 1;
+}
+
+/* ===== 触摸边界反馈 ===== */
+.ios-touch-edge {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 122, 255, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--ios-duration-fast) var(--ios-ease);
+    z-index: 150;
+    pointer-events: none;
+}
+
+.ios-touch-edge.active {
+    opacity: 1;
+}

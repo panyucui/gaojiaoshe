@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>高校检索 - 作者管理应用系统</title>
+
+    
+    <link rel="stylesheet" href="css/ios-navigation.css">
+    <link rel="stylesheet" href="css/ios-components.css">
+    <link rel="stylesheet" href="css/gesture-system.css">
+
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--ios-bg-secondary);
+            color: var(--ios-text);
+            min-height: 100vh;
+            padding-bottom: 60px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        
+        .ios-header-large {
+            background: var(--ios-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 0 var(--ios-space-4) var(--ios-space-2);
+            border-bottom: 0.5px solid var(--ios-separator-opaque);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .ios-header-large-title {
+            font-size: var(--ios-text-2xl);
+            font-weight: var(--ios-weight-bold);
+            color: var(--ios-text);
+            margin-top: var(--ios-space-2);
+            padding-bottom: var(--ios-space-2);
+            letter-spacing: -0.02em;
+        }
+
+        
+        .filter-section {
+            background: var(--ios-bg);
+            margin: var(--ios-space-3) var(--ios-space-4);
+            border-radius: var(--ios-radius-3);
+            overflow: hidden;
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .filter-toggle-btn-main {
+            width: 100%;
+            padding: var(--ios-space-3) var(--ios-space-4);
+            background: var(--ios-gray-bg);
+            border: none;
+            border-radius: var(--ios-radius-2);
+            color: var(--ios-blue);
+            font-size: var(--ios-text-lg);
+            font-weight: var(--ios-weight-medium);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color var(--ios-duration-fast) var(--ios-ease);
+        }
+
+        .filter-toggle-btn-main:active {
+            background: var(--ios-gray-bg);
+        }
+
+        .filter-panel {
+            display: none;
+            padding: var(--ios-space-4);
+        }
+
+        .filter-panel.show {
+            display: block;
+        }
+
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filter-item {
+            margin-bottom: 12px;
+        }
+
+        .filter-item.full-width {
+            grid-column: span 2;
+        }
+
+        .filter-item label {
+            display: block;
+            font-size: 13px;
+            color: var(--ios-gray);
+            margin-bottom: 6px;
+        }
+
+        
+        .filter-item input,
+        .filter-item select {
+            width: 100%;
+            padding: 11px 16px;
+            border: none;
+            border-radius: var(--ios-radius-2);
+            font-size: 15px;
+            background: var(--ios-gray-bg);
+            color: var(--ios-text);
+        }
+
+        .filter-item input:focus,
+        .filter-item select:focus {
+            outline: none;
+            background: var(--ios-bg);
+        }
+
+        
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--ios-space-3);
+            padding: var(--ios-space-3) var(--ios-space-4);
+            background: var(--ios-bg);
+            margin: 0 var(--ios-space-4) var(--ios-space-3);
+            border-radius: var(--ios-radius-3);
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .stats-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1 1 auto;
+            min-width: 70px;
+            max-width: 100px;
+            padding: var(--ios-space-3) var(--ios-space-4);
+            background: var(--ios-gray-bg);
+            border-radius: var(--ios-radius-2);
+        }
+
+        .stat-item .label {
+            font-size: var(--ios-text-xs);
+            color: var(--ios-gray);
+        }
+
+        .stat-item .value {
+            font-size: var(--ios-text-xl);
+            font-weight: var(--ios-weight-semibold);
+            color: var(--ios-blue);
+        }
+
+        
+        .card-list {
+            padding: 0 var(--ios-space-4);
+        }
+
+        .ios-list {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            margin-bottom: var(--ios-space-3);
+            overflow: hidden;
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .university-item {
+            display: flex;
+            align-items: center;
+            padding: var(--ios-space-3) var(--ios-space-4);
+            min-height: 44px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color var(--ios-duration-fast) var(--ios-ease);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .university-item:active {
+            background: var(--ios-gray-bg);
+        }
+
+        
+        .university-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--ios-gray);
+            border-radius: 50%;
+            margin-right: var(--ios-space-3);
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--ios-duration-fast) var(--ios-ease);
+            background: var(--ios-bg);
+        }
+
+        .university-checkbox.checked {
+            background: var(--ios-blue);
+            border-color: var(--ios-blue);
+        }
+
+        .university-checkbox.checked::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        
+        .university-item.select-mode {
+            padding-left: var(--ios-space-3);
+        }
+
+        .university-item.select-mode .university-checkbox {
+            display: flex;
+        }
+
+        .university-item:not(.select-mode) .university-checkbox {
+            display: none;
+        }
+
+        .university-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--ios-radius-2);
+            background: var(--ios-indigo);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--ios-text-base);
+            font-weight: var(--ios-weight-semibold);
+            margin-right: var(--ios-space-3);
+            flex-shrink: 0;
+        }
+
+        .university-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .university-name {
+            font-size: var(--ios-text-lg);
+            font-weight: var(--ios-weight-normal);
+            color: var(--ios-text);
+        }
+
+        .university-info {
+            font-size: var(--ios-text-sm);
+            color: var(--ios-gray);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .university-status {
+            display: flex;
+            align-items: center;
+            gap: var(--ios-space-2);
+            margin-top: var(--ios-space-1);
+        }
+
+        .academician-count {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px var(--ios-space-2);
+            background: var(--ios-purple);
+            color: white;
+            border-radius: var(--ios-radius-full);
+            font-size: var(--ios-text-xs);
+            font-weight: var(--ios-weight-medium);
+        }
+
+        .university-data {
+            font-size: var(--ios-text-sm);
+            color: var(--ios-gray);
+        }
+
+        .university-data strong {
+            color: var(--ios-blue);
+        }
+
+        .university-chevron {
+            width: 8px;
+            height: 13px;
+            margin-left: var(--ios-space-2);
+            color: var(--ios-gray);
+            flex-shrink: 0;
+        }
+
+        .ios-pull-refresh {
+            position: relative;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            min-height: calc(100vh - 60px);
+        }
+
+        
+        .select-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--ios-gray-bg);
+            border: none;
+            border-radius: var(--ios-radius-2);
+            color: var(--ios-blue);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color var(--ios-duration-fast) var(--ios-ease);
+        }
+
+        .select-btn:active {
+            background: var(--ios-bg);
+        }
+
+        .select-btn.active {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        
+        .select-action-bar {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            left: var(--ios-space-4);
+            right: var(--ios-space-4);
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: var(--ios-space-3) var(--ios-space-4);
+            box-shadow: var(--ios-shadow-3);
+            z-index: 40;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .select-action-bar.show {
+            display: flex;
+        }
+
+        .select-info {
+            font-size: var(--ios-text-sm);
+            color: var(--ios-text);
+        }
+
+        .select-info strong {
+            color: var(--ios-blue);
+            font-weight: var(--ios-weight-semibold);
+        }
+
+        .select-actions {
+            display: flex;
+            gap: var(--ios-space-2);
+        }
+
+        
+    </style>
+</head>
+<body>
+    
+    <div class="ios-header-large">
+        <div class="ios-header-large-title">高校检索</div>
+    </div>
+
+    
+    <div class="ios-pull-refresh" id="pullRefreshContainer">
+
+        
+        <div class="filter-section">
+            <button class="filter-toggle-btn-main ios-tap-feedback" onclick="toggleFilterPanel()">
+                <span>多维度检索</span>
+                <span id="filterArrow">▼</span>
+            </button>
+
+            <div class="filter-panel" id="filterPanel">
+                
+                <div class="filter-grid extended">
+                    <div class="filter-item full-width">
+                        <label>高校名称</label>
+                        <input type="text" id="universityName" placeholder="请输入高校名称" class="ios-input">
+                    </div>
+                    <div class="filter-item">
+                        <label>所属地区</label>
+                        <select id="region" class="ios-input">
+                            <option value="">请选择所属地区</option>
+                            <option value="11">北京</option>
+                            <option value="12">天津</option>
+                            <option value="13">河北</option>
+                            <option value="14">山西</option>
+                            <option value="15">内蒙古</option>
+                            <option value="21">辽宁</option>
+                            <option value="22">吉林</option>
+                            <option value="23">黑龙江</option>
+                            <option value="31">上海</option>
+                            <option value="32">江苏</option>
+                            <option value="33">浙江</option>
+                            <option value="34">安徽</option>
+                            <option value="35">福建</option>
+                            <option value="36">江西</option>
+                            <option value="37">山东</option>
+                            <option value="41">河南</option>
+                            <option value="42">湖北</option>
+                            <option value="43">湖南</option>
+                            <option value="44">广东</option>
+                            <option value="45">广西</option>
+                            <option value="46">海南</option>
+                            <option value="50">重庆</option>
+                            <option value="51">四川</option>
+                            <option value="52">贵州</option>
+                            <option value="53">云南</option>
+                            <option value="54">西藏</option>
+                            <option value="61">陕西</option>
+                            <option value="62">甘肃</option>
+                            <option value="63">青海</option>
+                            <option value="64">宁夏</option>
+                            <option value="65">新疆</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>办学类型</label>
+                        <select id="schoolType" class="ios-input">
+                            <option value="">请选择办学类型</option>
+                            <option value="1">公办</option>
+                            <option value="2">民办</option>
+                            <option value="3">中外合作办学</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>办学层次</label>
+                        <select id="educationLevel" class="ios-input">
+                            <option value="">请选择办学层次</option>
+                            <option value="1">本科</option>
+                            <option value="2">专科</option>
+                            <option value="3">成教</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>主管部门</label>
+                        <select id="governingBody" class="ios-input">
+                            <option value="">请选择主管部门</option>
+                            <option value="教育部">教育部</option>
+                            <option value="省属">省属</option>
+                            <option value="部属">部属</option>
+                            <option value="地方">地方</option>
+                            <option value="民办">民办</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>学校类型</label>
+                        <select id="schoolCategory" class="ios-input">
+                            <option value="">请选择学校类型</option>
+                            <option value="1">普通高等学校</option>
+                            <option value="2">成人高等学校</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>是否有合作</label>
+                        <select id="hasCooperation" class="ios-input">
+                            <option value="">请选择是否有合作</option>
+                            <option value="1">已合作</option>
+                            <option value="0">未合作</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label>是否有院士</label>
+                        <select id="hasAcademician" class="ios-input">
+                            <option value="">请选择是否有院士</option>
+                            <option value="1">有院士</option>
+                            <option value="0">无院士</option>
+                        </select>
+                    </div>
+                    <div class="filter-item full-width">
+                        <label>逻辑模式</label>
+                        <select id="logicMode" class="ios-input">
+                            <option value="and">且（满足全部条件）</option>
+                            <option value="or">或（满足任一条件）</option>
+                        </select>
+                    </div>
+                </div>
+
+                
+                <div class="filter-buttons">
+                    <button class="ios-btn-capsule gray" onclick="resetFilter()">重置</button>
+                    <button class="ios-btn-capsule primary" onclick="searchUniversities()">搜索</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="label">检索结果</div>
+                <div class="value" id="statTotal">2,856</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">合作院校</div>
+                <div class="value" id="statCooperation">1,234</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">有院士的院校</div>
+                <div class="value" id="statAcademician">456</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">双一流大学</div>
+                <div class="value" id="statDoubleFirst">147</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">985工程</div>
+                <div class="value" id="stat985">39</div>
+            </div>
+            <div class="stat-item">
+                <div class="label">收录教师数</div>
+                <div class="value" id="statTeacherCount">12,345</div>
+            </div>
+            
+            <button class="select-btn ios-tap-feedback" id="selectModeBtn" onclick="toggleSelectMode()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+            </button>
+            
+            <button class="export-btn has-permission" id="exportBtn" onclick="handleExportClick()">
+                <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+            </button>
+        </div>
+
+        
+        <div class="sort-bar">
+            <button class="sort-item active" data-field="name" data-default-order="asc">高校名称</button>
+            <button class="sort-item" data-field="province" data-default-order="asc">属地</button>
+            <button class="sort-item" data-field="academicianCount" data-default-order="desc">院士数</button>
+            <button class="sort-item" data-field="totalAuthors" data-default-order="desc">收录作者数</button>
+            <button class="sort-item" data-field="coauthorCount" data-default-order="desc">合作作者数</button>
+            <button class="sort-item" data-field="cooperationCount" data-default-order="desc">合作次数</button>
+        </div>
+
+        
+        <div class="select-action-bar" id="selectActionBar">
+            <div class="select-info">
+                <span>已选择 <strong id="selectedCount">0</strong> 所高校</span>
+            </div>
+            <div class="select-actions">
+                <button class="ios-btn-capsule gray small" onclick="selectAllUniversities()">全选</button>
+                <button class="ios-btn-capsule gray small" onclick="clearSelection()">取消</button>
+            </div>
+        </div>
+
+        
+        <div class="card-list" id="cardList">
+            
+        </div>
+
+        
+        <div class="load-more-section" id="loadMoreSection">
+            <div class="load-more-text">上拉加载更多</div>
+        </div>
+    </div>
+
+    
+    <div class="ios-modal-overlay" id="exportModal">
+        <div class="ios-modal">
+            <div class="ios-modal-header">
+                <div class="ios-modal-title">导出高校数据</div>
+            </div>
+            <div class="ios-modal-body">
+                <div class="ios-modal-text">
+                    导出数量（最大1000条）
+                </div>
+                <div class="export-count-input" style="margin-top: 12px;">
+                    <input type="number" id="exportCount" value="100" min="1" max="1000" style="width: 100px; padding: 8px 12px; border: 1px solid var(--ios-separator-opaque); border-radius: var(--ios-radius-2); font-size: 15px;">
+                    <span style="color: var(--ios-gray); font-size: 14px;"> 条</span>
+                </div>
+            </div>
+            <div class="ios-modal-footer">
+                <div class="ios-modal-btn cancel" onclick="closeExportModal()">取消</div>
+                <div class="ios-modal-btn confirm" onclick="confirmExport()">确认导出</div>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav class="ios-tab-nav">
+        <a href="teacher-list.html" class="ios-tab-item" data-tab="teachers">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">作者检索</div>
+        </a>
+        <a href="university-list.html" class="ios-tab-item active" data-tab="universities">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">高校检索</div>
+        </a>
+        <a href="warning-management.html" class="ios-tab-item" data-tab="warnings">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">预警管理</div>
+        </a>
+        <a href="my.html" class="ios-tab-item" data-tab="my">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">我的</div>
+        </a>
+    </nav>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    
+    <script src="js/pc-data-dict.js"></script>
+
+    
+    <script src="js/ios-navigation.js"></script>
+    <script src="js/pull-refresh.js"></script>
+    <script src="js/gesture-handler.js"></script>
+    <script src="js/sort-manager.js"></script>
+    <script src="js/export-handler.js"></script>
+
+    <script>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        const universitiesData = [
+            
+            { id: "U001", name: "北京大学", province: "11", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 156, cooperationStatus: "1", cooperationCount: 89, coauthorCount: 45, totalAuthors: 1234, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U002", name: "清华大学", province: "11", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 178, cooperationStatus: "1", cooperationCount: 102, coauthorCount: 56, totalAuthors: 1567, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U003", name: "复旦大学", province: "31", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 98, cooperationStatus: "1", cooperationCount: 67, coauthorCount: 34, totalAuthors: 890, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U004", name: "上海交通大学", province: "31", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 112, cooperationStatus: "1", cooperationCount: 78, coauthorCount: 41, totalAuthors: 1023, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U005", name: "浙江大学", province: "33", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 89, cooperationStatus: "1", cooperationCount: 56, coauthorCount: 28, totalAuthors: 756, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U006", name: "南京大学", province: "32", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 76, cooperationStatus: "1", cooperationCount: 45, coauthorCount: 23, totalAuthors: 678, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U007", name: "武汉大学", province: "42", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 65, cooperationStatus: "1", cooperationCount: 34, coauthorCount: 17, totalAuthors: 543, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U008", name: "华中科技大学", province: "42", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 58, cooperationStatus: "0", cooperationCount: 0, coauthorCount: 0, totalAuthors: 456, hasCooperation: "0", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U009", name: "中山大学", province: "44", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 52, cooperationStatus: "1", cooperationCount: 28, coauthorCount: 14, totalAuthors: 678, hasCooperation: "1", isDoubleFirst: true, is985: true, is211: true },
+            { id: "U010", name: "四川大学", province: "51", eduType: "公办", schoolCategory: "普通高等学校", eduLevel: "本科", competentDeptName: "教育部", academicianCount: 48, cooperationStatus: "1", cooperationCount: 23, coauthorCount: 12, totalAuthors: 567, hasCooperation: "1", isDoubleFirst: true, is985: false, is211: true }
+        ];
+
+        let allData = [...universitiesData];
+
+        
+        let selectMode = false;
+        let selectedUniversities = new Set();
+
+        
+        function toggleSelectMode() {
+            selectMode = !selectMode;
+            const btn = document.getElementById('selectModeBtn');
+            const actionBar = document.getElementById('selectActionBar');
+
+            btn.classList.toggle('active', selectMode);
+            actionBar.classList.toggle('show', selectMode);
+
+            
+            document.querySelectorAll('.university-item').forEach(item => {
+                item.classList.toggle('select-mode', selectMode);
+            });
+
+            if (!selectMode) {
+                clearSelection();
+            }
+        }
+
+        function toggleUniversitySelection(id) {
+            if (selectedUniversities.has(id)) {
+                selectedUniversities.delete(id);
+            } else {
+                selectedUniversities.add(id);
+            }
+            updateSelectedUI();
+        }
+
+        function selectAllUniversities() {
+            allData.forEach(u => selectedUniversities.add(u.id));
+            updateSelectedUI();
+            updateAllCheckboxes();
+        }
+
+        function clearSelection() {
+            selectedUniversities.clear();
+            selectMode = false;
+            document.getElementById('selectModeBtn').classList.remove('active');
+            document.getElementById('selectActionBar').classList.remove('show');
+            document.querySelectorAll('.university-item').forEach(item => {
+                item.classList.remove('select-mode');
+            });
+            updateAllCheckboxes();
+        }
+
+        function updateSelectedUI() {
+            document.getElementById('selectedCount').textContent = selectedUniversities.size;
+        }
+
+        function updateAllCheckboxes() {
+            document.querySelectorAll('.university-checkbox').forEach(checkbox => {
+                const id = checkbox.dataset.id;
+                checkbox.classList.toggle('checked', selectedUniversities.has(id));
+            });
+        }
+
+        
+        function toggleFilterPanel() {
+            const panel = document.getElementById('filterPanel');
+            const arrow = document.getElementById('filterArrow');
+            panel.classList.toggle('show');
+            arrow.textContent = panel.classList.contains('show') ? '▲' : '▼';
+        }
+
+        function resetFilter() {
+            
+            document.getElementById('universityName').value = '';
+            document.getElementById('region').value = '';
+            document.getElementById('schoolType').value = '';
+            document.getElementById('schoolCategory').value = '';
+            document.getElementById('educationLevel').value = '';
+            document.getElementById('governingBody').value = '';
+            document.getElementById('hasCooperation').value = '';
+            document.getElementById('hasAcademician').value = '';
+            
+            allData = [...universitiesData];
+            renderList(allData);
+            updateStats(allData);
+            
+            if (window.universitySortManager) {
+                window.universitySortManager.reset();
+            }
+        }
+
+        function searchUniversities() {
+            
+            const name = document.getElementById('universityName').value;
+            const province = document.getElementById('region').value;
+            const schoolType = document.getElementById('schoolType').value;
+            const schoolCategory = document.getElementById('schoolCategory').value;
+            const educationLevel = document.getElementById('educationLevel').value;
+            const governingBody = document.getElementById('governingBody').value;
+            const hasCooperation = document.getElementById('hasCooperation').value;
+            const hasAcademician = document.getElementById('hasAcademician').value;
+
+            let filteredData = universitiesData.filter(u => {
+                
+                if (name && !u.name.toLowerCase().includes(name.toLowerCase())) return false;
+                
+                if (province && u.province !== province) return false;
+                
+                if (schoolType) {
+                    const typeMap = { '1': '公办', '2': '民办', '3': '中外合作办学' };
+                    if (u.eduType !== typeMap[schoolType]) return false;
+                }
+                
+                if (schoolCategory) {
+                    const categoryMap = { '1': '普通高等学校', '2': '成人高等学校' };
+                    if (u.schoolCategory !== categoryMap[schoolCategory]) return false;
+                }
+                
+                if (educationLevel) {
+                    const levelMap = { '1': '本科', '2': '专科', '3': '研究生' };
+                    if (u.eduLevel !== levelMap[educationLevel]) return false;
+                }
+                
+                if (governingBody && u.competentDeptName !== governingBody) return false;
+                
+                if (hasCooperation && u.hasCooperation !== hasCooperation) return false;
+                
+                if (hasAcademician === '1' && (!u.academicianCount || u.academicianCount === 0)) return false;
+                if (hasAcademician === '0' && u.academicianCount > 0) return false;
+                return true;
+            });
+
+            allData = filteredData;
+            renderList(filteredData);
+            updateStats(filteredData);
+        }
+
+        function updateStats(data) {
+            document.getElementById('statTotal').textContent = data.length;
+            document.getElementById('statCooperation').textContent = data.filter(u => u.hasCooperation === '1' || u.cooperationStatus === '1').length;
+            document.getElementById('statAcademician').textContent = data.filter(u => u.academicianCount > 0).length;
+            
+            document.getElementById('statDoubleFirst').textContent = data.filter(u => u.isDoubleFirst).length || 0;
+            document.getElementById('stat985').textContent = data.filter(u => u.is985).length || 0;
+            
+            document.getElementById('statTeacherCount').textContent = data.reduce((sum, u) => sum + (u.totalAuthors || 0), 0);
+        }
+
+        
+        function renderList(data) {
+            const cardList = document.getElementById('cardList');
+            cardList.innerHTML = '';
+
+            const list = document.createElement('div');
+            list.className = 'ios-list';
+
+            data.forEach(university => {
+                const item = createUniversityItem(university);
+                list.appendChild(item);
+            });
+
+            cardList.appendChild(list);
+        }
+
+        function createUniversityItem(university) {
+            const item = document.createElement('div');
+            item.className = 'university-item ios-tap-feedback';
+            item.dataset.id = university.id;
+
+            
+            const avatarText = university.name.charAt(0);
+
+            
+            const provinceName = getProvinceName(university.province);
+
+            
+            const cooperationBadge = university.cooperationStatus === '1' || university.hasCooperation === '1'
+                ? `<span class="ios-status-text success">有成果</span>`
+                : `<span class="ios-status-text gray">无成果</span>`;
+
+            const academicianBadge = university.academicianCount > 0
+                ? `<span class="ios-status-text info">院士${university.academicianCount}人</span>`
+                : '';
+
+            
+            const checkbox = document.createElement('div');
+            checkbox.className = 'university-checkbox';
+            checkbox.dataset.id = university.id;
+            if (selectedUniversities.has(university.id)) {
+                checkbox.classList.add('checked');
+            }
+
+            
+            checkbox.onclick = (e) => {
+                e.stopPropagation();
+                toggleUniversitySelection(university.id);
+                checkbox.classList.toggle('checked', selectedUniversities.has(university.id));
+            };
+
+            
+            const content = document.createElement('div');
+            content.className = 'university-content';
+            content.innerHTML = `
+                <div class="university-name">${university.name}</div>
+                <div class="university-info">${provinceName} · ${university.eduType} · ${university.eduLevel}</div>
+                <div class="university-info">主管部门: ${university.competentDeptName}</div>
+                <div class="university-status">
+                    ${academicianBadge}
+                    ${cooperationBadge}
+                    <span class="university-data">作者: <strong>${university.totalAuthors}</strong></span>
+                    <span class="university-data">合作: <strong>${university.cooperationCount}</strong></span>
+                </div>
+            `;
+
+            
+            const chevron = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            chevron.setAttribute('class', 'university-chevron');
+            chevron.setAttribute('viewBox', '0 0 8 13');
+            chevron.setAttribute('fill', 'none');
+            chevron.innerHTML = `<path d="M1 1l6 5.5L1 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+            
+            item.appendChild(checkbox);
+            item.appendChild(content);
+            item.appendChild(chevron);
+
+            
+            item.onclick = () => {
+                if (selectMode) {
+                    toggleUniversitySelection(university.id);
+                    checkbox.classList.toggle('checked', selectedUniversities.has(university.id));
+                } else {
+                    window.location.href = 'university-profile.html?id=' + university.id;
+                }
+            };
+
+            return item;
+        }
+
+        
+        window.handleExportClick = function() {
+            const exportModal = document.getElementById('exportModal');
+            const defaultCount = Math.min(allData.length, 1000);
+            document.getElementById('exportCount').value = defaultCount;
+            exportModal.classList.add('show');
+        };
+
+        window.closeExportModal = function() {
+            document.getElementById('exportModal').classList.remove('show');
+        };
+
+        window.confirmExport = function() {
+            window.closeExportModal();
+
+            
+            const exportCountInput = document.getElementById('exportCount');
+            let exportLimit = parseInt(exportCountInput.value) || 100;
+
+            
+            if (exportLimit < 1 || exportLimit > 1000) {
+                alert('导出数量需在1-1000之间');
+                return;
+            }
+
+            
+            const dataToExport = (allData || []).slice(0, exportLimit);
+
+            if (dataToExport.length === 0) {
+                alert('无数据可导出');
+                return;
+            }
+
+            
+            const exportData = dataToExport.map((u, i) => {
+                return {
+                    '序号': i + 1,
+                    '高校名称': u.name || '',
+                    '属地': getProvinceName(u.province),
+                    '学校类型': u.schoolCategory || '',
+                    '办学类型': u.eduType || '',
+                    '办学层次': u.eduLevel || '',
+                    '主管部门': u.competentDeptName || '',
+                    '校内院士数': u.academicianCount || 0,
+                    '合作状态': u.cooperationStatus === '1' ? '有成果' : '无成果',
+                    '合作作者数': u.coauthorCount || 0,
+                    '合作次数': u.cooperationCount || 0,
+                    '收录作者数': u.totalAuthors || 0,
+                    '双一流': u.isDoubleFirst ? '是' : '否',
+                    '985': u.is985 ? '是' : '否',
+                    '211': u.is211 ? '是' : '否'
+                };
+            });
+
+            if (typeof XLSX !== 'undefined') {
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                
+                ws['!cols'] = [
+                    { wch: 8 },  
+                    { wch: 20 }, 
+                    { wch: 12 }, 
+                    { wch: 16 }, 
+                    { wch: 12 }, 
+                    { wch: 10 }, 
+                    { wch: 12 }, 
+                    { wch: 12 }, 
+                    { wch: 12 }, 
+                    { wch: 12 }, 
+                    { wch: 10 }, 
+                    { wch: 12 }, 
+                    { wch: 8 },  
+                    { wch: 8 },  
+                    { wch: 8 }   
+                ];
+                XLSX.utils.book_append_sheet(wb, ws, '高校检索');
+                const filename = `高校检索结果_${new Date().toISOString().slice(0, 10)}.xlsx`;
+                XLSX.writeFile(wb, filename);
+                alert('导出成功！共导出 ' + dataToExport.length + ' 条数据');
+            } else {
+                alert('SheetJS库未加载，请刷新页面重试');
+            }
+        };
+
+        window.initExportBtn = function(type) {
+            
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.disabled = false;
+            }
+        };
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            renderList(universitiesData);
+            updateStats(universitiesData);
+
+            
+            document.getElementById('selectedCount').textContent = '0';
+
+            
+            const sortManager = new SortManager('university', handleSort);
+            sortManager.init();
+            window.universitySortManager = sortManager;
+
+            
+            initExportBtn('university');
+
+            
+            PaginationManager.init({
+                containerSelector: '#pullRefreshContainer',
+                totalItems: 100, 
+                onLoadMore: (page) => {
+                    
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            
+                            const newUniversities = [];
+                            const startIndex = (page - 1) * 20 + 11;
+                            for (let i = 0; i < 20; i++) {
+                                newUniversities.push({
+                                    id: startIndex + i,
+                                    name: "测试高校" + (startIndex + i),
+                                    region: "江苏",
+                                    level: "本科",
+                                    academicianCount: Math.floor(Math.random() * 50),
+                                    cooperation: true,
+                                    teacherCount: Math.floor(Math.random() * 500) + 100,
+                                    cooperationCount: Math.floor(Math.random() * 1000),
+                                    isDoubleFirst: false,
+                                    is985: false
+                                });
+                            }
+                            
+                            appendToList(newUniversities);
+                            resolve(newUniversities);
+                        }, 500);
+                    });
+                }
+            });
+        });
+
+        
+        function appendToList(newData) {
+            const cardList = document.getElementById('cardList');
+            const list = cardList.querySelector('.ios-list');
+            if (!list) return;
+
+            newData.forEach(university => {
+                const item = createUniversityItem(university);
+                list.appendChild(item);
+            });
+        }
+
+        
+        function handleSort(field, order) {
+            
+            let sortedData = [...allData];
+
+            sortedData.sort((a, b) => {
+                let valueA, valueB;
+
+                switch (field) {
+                    case 'name':
+                        valueA = a.name || '';
+                        valueB = b.name || '';
+                        break;
+                    case 'province':
+                        valueA = getProvinceName(a.province) || '';
+                        valueB = getProvinceName(b.province) || '';
+                        break;
+                    case 'academicianCount':
+                        valueA = a.academicianCount || 0;
+                        valueB = b.academicianCount || 0;
+                        break;
+                    case 'totalAuthors':
+                        valueA = a.totalAuthors || 0;
+                        valueB = b.totalAuthors || 0;
+                        break;
+                    case 'coauthorCount':
+                        valueA = a.coauthorCount || 0;
+                        valueB = b.coauthorCount || 0;
+                        break;
+                    case 'cooperationCount':
+                        valueA = a.cooperationCount || 0;
+                        valueB = b.cooperationCount || 0;
+                        break;
+                    default:
+                        return 0;
+                }
+
+                
+                if (order === 'asc') {
+                    if (typeof valueA === 'string') {
+                        return valueA.localeCompare(valueB, 'zh-CN');
+                    }
+                    return valueA - valueB;
+                } else {
+                    if (typeof valueA === 'string') {
+                        return valueB.localeCompare(valueA, 'zh-CN');
+                    }
+                    return valueB - valueA;
+                }
+            });
+
+            renderList(sortedData);
+            updateStats(sortedData);
+        }
+    </script>
+</body>
+</html>

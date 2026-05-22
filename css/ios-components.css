@@ -1,0 +1,1473 @@
+/**
+ * iOS Components CSS v3.0 - 现代化视觉升级
+ * 升级日期: 2026-05-18
+ * 设计风格: 精致现代 iOS 17+ 风格
+ */
+
+/* ===== 现代化 Capsule 按钮 ===== */
+.ios-btn-capsule {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ios-space-2);
+    padding: var(--ios-space-3) var(--ios-space-5);
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-base);
+    font-weight: var(--ios-weight-medium);
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease-bounce);
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+    letter-spacing: -0.01em;
+    position: relative;
+    overflow: hidden;
+}
+
+.ios-btn-capsule:active {
+    transform: scale(0.97);
+}
+
+/* 主要按钮 - 蓝色渐变 */
+.ios-btn-capsule.primary {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    color: var(--ios-bg);
+    border: none;
+    box-shadow: var(--ios-shadow-md), 0 2px 8px rgba(0, 122, 255, 0.25);
+}
+
+.ios-btn-capsule.primary:active {
+    background: linear-gradient(135deg, var(--ios-blue-dark) 0%, var(--ios-blue) 100%);
+    box-shadow: var(--ios-shadow-sm), 0 1px 4px rgba(0, 122, 255, 0.2);
+}
+
+/* 主要按钮光效 */
+.ios-btn-capsule.primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    border-radius: inherit;
+}
+
+/* 次要按钮 - 玻璃效果 */
+.ios-btn-capsule.secondary {
+    background: rgba(0, 122, 255, 0.08);
+    color: var(--ios-blue);
+    border: 1px solid rgba(0, 122, 255, 0.15);
+    box-shadow: none;
+}
+
+.ios-btn-capsule.secondary:active {
+    background: rgba(0, 122, 255, 0.15);
+    border-color: rgba(0, 122, 255, 0.25);
+}
+
+/* 灰色按钮 */
+.ios-btn-capsule.gray {
+    background: var(--ios-gray-bg);
+    color: var(--ios-gray-dark);
+    border: none;
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.ios-btn-capsule.gray:active {
+    background: var(--ios-separator-opaque);
+    box-shadow: none;
+}
+
+/* 危险按钮 - 红色渐变 */
+.ios-btn-capsule.danger {
+    background: linear-gradient(135deg, var(--ios-red) 0%, var(--ios-red-light) 100%);
+    color: var(--ios-bg);
+    border: none;
+    box-shadow: var(--ios-shadow-md), 0 2px 8px rgba(255, 59, 48, 0.25);
+}
+
+.ios-btn-capsule.danger:active {
+    background: linear-gradient(135deg, var(--ios-red-light) 0%, var(--ios-red) 100%);
+}
+
+/* 小尺寸按钮 */
+.ios-btn-capsule.small {
+    padding: var(--ios-space-2) var(--ios-space-4);
+    font-size: var(--ios-text-sm);
+    min-height: 32px;
+    border-radius: var(--ios-radius-lg);
+}
+
+/* 按钮组 */
+.ios-btn-group {
+    display: flex;
+    gap: var(--ios-space-3);
+}
+
+.ios-btn-group .ios-btn-capsule {
+    flex: 1;
+}
+
+/* ===== 现代化输入框 ===== */
+.ios-input {
+    width: 100%;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    border: none;
+    border-radius: var(--ios-radius-lg);
+    font-size: var(--ios-text-base);
+    color: var(--ios-text);
+    background: var(--ios-gray-bg);
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    outline: none;
+    min-height: 44px;
+    box-shadow: var(--ios-shadow-inset);
+}
+
+.ios-input:focus {
+    background: var(--ios-bg);
+    box-shadow: inset 0 0 0 2px var(--ios-blue), var(--ios-shadow-md);
+    transform: scale(1.01);
+}
+
+.ios-input::placeholder {
+    color: var(--ios-gray);
+}
+
+/* 输入框容器 */
+.ios-input-wrapper {
+    position: relative;
+    margin-bottom: var(--ios-space-3);
+}
+
+.ios-input-label {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+    margin-bottom: var(--ios-space-2);
+    letter-spacing: -0.01em;
+    font-weight: var(--ios-weight-medium);
+}
+
+/* ===== 现代化卡片 ===== */
+.ios-card {
+    width: 100%;
+    background: var(--ios-bg-card-gradient);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+    margin: 0 0 var(--ios-card-margin) 0;
+    overflow: hidden;
+    border: 0.5px solid rgba(0, 0, 0, 0.02);
+    transition: transform var(--ios-duration-normal) var(--ios-ease),
+                box-shadow var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-card-content {
+    padding: var(--ios-card-padding);
+}
+
+.ios-card-header {
+    display: flex;
+    align-items: center;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    background: var(--ios-bg-gradient);
+}
+
+.ios-card-title {
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-semibold);
+    color: var(--ios-text);
+    letter-spacing: -0.02em;
+}
+
+.ios-card-footer {
+    display: flex;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    gap: var(--ios-space-3);
+    background: var(--ios-gray-bg-light);
+    border-top: 0.5px solid var(--ios-separator-opaque);
+}
+
+.ios-card-interactive {
+    cursor: pointer;
+}
+
+.ios-card-interactive:active {
+    transform: scale(0.98);
+    box-shadow: var(--ios-shadow-sm);
+}
+
+/* ===== 现代化列表 ===== */
+.ios-list {
+    background: var(--ios-bg);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+    overflow: hidden;
+    margin: 0 0 var(--ios-card-margin) 0;
+}
+
+.ios-list-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    min-height: 44px;
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+.ios-list-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--ios-space-4);
+    right: var(--ios-space-4);
+    height: 0.5px;
+    background: var(--ios-separator-opaque);
+}
+
+.ios-list-item:active {
+    background: var(--ios-gray-bg);
+}
+
+/* 列表项图标 */
+.ios-list-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--ios-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--ios-space-3);
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.12) 0%, rgba(0, 122, 255, 0.08) 100%);
+    color: var(--ios-blue);
+    flex-shrink: 0;
+    transition: transform var(--ios-duration-fast) var(--ios-ease-bounce);
+}
+
+.ios-list-item:active .ios-list-icon {
+    transform: scale(0.9);
+}
+
+/* 列表项内容 */
+.ios-list-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.ios-list-title {
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-normal);
+    color: var(--ios-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: var(--ios-leading-normal);
+    margin-bottom: 2px;
+}
+
+.ios-list-subtitle {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: var(--ios-leading-normal);
+}
+
+/* 列表项右侧箭头 */
+.ios-list-chevron {
+    width: 8px;
+    height: 13px;
+    margin-left: var(--ios-space-2);
+    color: var(--ios-separator);
+    flex-shrink: 0;
+}
+
+/* 列表项右侧内容 */
+.ios-list-right {
+    font-size: var(--ios-text-base);
+    color: var(--ios-gray);
+    margin-left: var(--ios-space-2);
+    flex-shrink: 0;
+}
+
+/* ===== 现代化开关 ===== */
+.ios-switch {
+    width: 51px;
+    height: 31px;
+    border-radius: var(--ios-radius-full);
+    background: var(--ios-gray-bg);
+    position: relative;
+    cursor: pointer;
+    transition: all var(--ios-duration-normal) var(--ios-ease);
+    box-shadow: var(--ios-shadow-inset);
+}
+
+.ios-switch.on {
+    background: linear-gradient(135deg, var(--ios-green) 0%, var(--ios-green-light) 100%);
+    box-shadow: var(--ios-shadow-md), 0 2px 8px rgba(52, 199, 89, 0.25);
+}
+
+.ios-switch-knob {
+    width: 27px;
+    height: 27px;
+    border-radius: var(--ios-radius-full);
+    background: var(--ios-bg);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    box-shadow: var(--ios-shadow-md);
+    transition: all var(--ios-duration-normal) var(--ios-ease-bounce);
+}
+
+.ios-switch.on .ios-switch-knob {
+    transform: translateX(20px);
+}
+
+/* ===== 现代化徽章 ===== */
+.ios-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-xs);
+    font-weight: var(--ios-weight-medium);
+    min-width: 20px;
+    letter-spacing: 0;
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.ios-badge.success {
+    background: linear-gradient(135deg, var(--ios-green) 0%, var(--ios-green-light) 100%);
+    color: var(--ios-bg);
+}
+
+.ios-badge.warning {
+    background: linear-gradient(135deg, var(--ios-orange) 0%, var(--ios-orange-light) 100%);
+    color: var(--ios-bg);
+}
+
+.ios-badge.danger {
+    background: linear-gradient(135deg, var(--ios-red) 0%, var(--ios-red-light) 100%);
+    color: var(--ios-bg);
+}
+
+.ios-badge.info {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-light) 100%);
+    color: var(--ios-bg);
+}
+
+.ios-badge.gray {
+    background: var(--ios-gray-bg);
+    color: var(--ios-gray-dark);
+    box-shadow: none;
+}
+
+/* 轻量状态文字 */
+.ios-status-text {
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    letter-spacing: -0.01em;
+    padding: 2px 8px;
+    border-radius: var(--ios-radius-sm);
+}
+
+.ios-status-text.success {
+    color: var(--ios-green);
+    background: rgba(52, 199, 89, 0.12);
+}
+
+.ios-status-text.warning {
+    color: var(--ios-orange);
+    background: rgba(255, 149, 0, 0.12);
+}
+
+.ios-status-text.danger {
+    color: var(--ios-red);
+    background: rgba(255, 59, 48, 0.12);
+}
+
+.ios-status-text.info {
+    color: var(--ios-blue);
+    background: rgba(0, 122, 255, 0.12);
+}
+
+.ios-status-text.gray {
+    color: var(--ios-gray);
+    background: var(--ios-gray-bg);
+}
+
+/* 小圆点徽章 */
+.ios-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--ios-radius-full);
+    background: var(--ios-red);
+    box-shadow: 0 0 4px rgba(255, 59, 48, 0.5);
+}
+
+/* ===== 现代化工具栏 ===== */
+.ios-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--ios-space-2);
+    padding: var(--ios-space-2) var(--ios-space-4);
+    background: var(--ios-bg);
+    backdrop-filter: var(--ios-blur-normal);
+    -webkit-backdrop-filter: var(--ios-blur-normal);
+    background-color: rgba(255, 255, 255, 0.90);
+    border-top: 0.5px solid var(--ios-separator-opaque);
+    box-shadow: var(--ios-shadow-nav);
+}
+
+.profile-toolbar {
+    position: fixed;
+    bottom: calc(var(--apple-nav-height) + var(--apple-safe-area));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 428px;
+    z-index: 40;
+}
+
+.ios-toolbar-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ios-blue);
+    font-size: var(--ios-text-lg);
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    border-radius: var(--ios-radius-md);
+}
+
+.ios-toolbar-btn:active {
+    opacity: 0.7;
+    transform: scale(0.95);
+}
+
+/* ===== 现代化弹窗 ===== */
+.ios-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--ios-duration-normal) var(--ios-ease);
+}
+
+.ios-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ios-modal {
+    background: var(--ios-bg);
+    border-radius: var(--ios-radius-xl);
+    width: 270px;
+    overflow: hidden;
+    box-shadow: var(--ios-shadow-modal);
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+    transition: all var(--ios-duration-normal) var(--ios-ease-bounce);
+}
+
+.ios-modal-overlay.show .ios-modal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.ios-modal-header {
+    padding: var(--ios-space-5) var(--ios-space-4) var(--ios-space-2);
+    text-align: center;
+    background: var(--ios-bg-gradient);
+}
+
+.ios-modal-title {
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-semibold);
+    color: var(--ios-text);
+    letter-spacing: -0.02em;
+}
+
+.ios-modal-body {
+    padding: var(--ios-space-2) var(--ios-space-4) var(--ios-space-5);
+    text-align: center;
+}
+
+.ios-modal-text {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-text-secondary);
+    line-height: var(--ios-leading-normal);
+}
+
+.ios-modal-footer {
+    display: flex;
+    border-top: 0.5px solid var(--ios-separator-opaque);
+}
+
+.ios-modal-btn {
+    flex: 1;
+    padding: var(--ios-space-4) var(--ios-space-4);
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-medium);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ios-modal-btn:not(:last-child) {
+    border-right: 0.5px solid var(--ios-separator-opaque);
+}
+
+.ios-modal-btn:active {
+    background: var(--ios-gray-bg);
+}
+
+.ios-modal-btn.cancel {
+    color: var(--ios-blue);
+}
+
+.ios-modal-btn.confirm {
+    color: var(--ios-blue);
+    font-weight: var(--ios-weight-semibold);
+}
+
+.ios-modal-btn.destructive {
+    color: var(--ios-red);
+}
+
+/* 大尺寸弹窗 */
+.ios-modal-large {
+    width: 340px;
+    max-width: 92vw;
+    border-radius: var(--ios-radius-2xl);
+}
+
+.ios-modal-large .ios-modal-body {
+    text-align: left;
+    padding: var(--ios-space-3) var(--ios-space-4) var(--ios-space-4);
+}
+
+/* ===== 导出弹窗样式 ===== */
+.export-options {
+    margin-top: var(--ios-space-4);
+    border-top: 0.5px solid var(--ios-separator-opaque);
+    padding-top: var(--ios-space-3);
+}
+
+.export-option-group {
+    margin-bottom: var(--ios-space-4);
+}
+
+.export-option-label {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+    margin-bottom: var(--ios-space-2);
+    font-weight: var(--ios-weight-medium);
+}
+
+.export-range-options {
+    display: flex;
+    gap: var(--ios-space-3);
+}
+
+.export-range-btn {
+    flex: 1;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    border: 1px solid var(--ios-separator-opaque);
+    border-radius: var(--ios-radius-lg);
+    background: var(--ios-bg);
+    font-size: var(--ios-text-sm);
+    color: var(--ios-text);
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    text-align: center;
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.export-range-btn.active {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    color: white;
+    border-color: var(--ios-blue);
+    box-shadow: var(--ios-shadow-md), 0 2px 8px rgba(0, 122, 255, 0.25);
+}
+
+.export-range-btn:active {
+    transform: scale(0.97);
+}
+
+.export-count-input {
+    display: flex;
+    align-items: center;
+    gap: var(--ios-space-3);
+    margin-top: var(--ios-space-2);
+}
+
+.export-count-input input {
+    width: 80px;
+    padding: var(--ios-space-2) var(--ios-space-3);
+    border: 1px solid var(--ios-separator-opaque);
+    border-radius: var(--ios-radius-md);
+    font-size: var(--ios-text-base);
+    text-align: center;
+    background: var(--ios-gray-bg);
+    box-shadow: var(--ios-shadow-inset);
+}
+
+.export-count-input input:focus {
+    border-color: var(--ios-blue);
+    outline: none;
+    background: var(--ios-bg);
+    box-shadow: inset 0 0 0 2px var(--ios-blue);
+}
+
+.export-count-label {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+}
+
+.export-fields-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ios-space-2);
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.export-field-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--ios-space-2);
+    padding: var(--ios-space-2) var(--ios-space-3);
+    background: var(--ios-gray-bg);
+    border-radius: var(--ios-radius-md);
+    cursor: pointer;
+    font-size: var(--ios-text-sm);
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    border: 1px solid transparent;
+}
+
+.export-field-checkbox:active {
+    transform: scale(0.97);
+}
+
+.export-field-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--ios-blue);
+}
+
+.export-field-checkbox.checked {
+    background: rgba(0, 122, 255, 0.12);
+    border-color: rgba(0, 122, 255, 0.2);
+}
+
+/* ===== 现代化加载指示器 ===== */
+.ios-activity-indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--ios-gray-bg);
+    border-top-color: var(--ios-blue);
+    border-radius: 50%;
+    animation: ios-spin 0.8s linear infinite;
+}
+
+@keyframes ios-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.ios-activity-indicator.large {
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+}
+
+/* ===== 现代化统计卡片 ===== */
+.stat-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ios-space-3);
+    overflow-x: auto;
+    padding-bottom: var(--ios-space-3);
+}
+
+.stat-cards::-webkit-scrollbar {
+    display: none;
+}
+
+.stat-card {
+    flex: 1 1 auto;
+    min-width: 85px;
+    max-width: 110px;
+    padding: var(--ios-space-4);
+    background: var(--ios-bg);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+    text-align: center;
+    transition: transform var(--ios-duration-fast) var(--ios-ease-bounce);
+}
+
+.stat-card:active {
+    transform: scale(0.97);
+}
+
+.stat-card .label {
+    font-size: var(--ios-text-xs);
+    color: var(--ios-gray);
+    letter-spacing: 0.02em;
+}
+
+.stat-card .value {
+    font-size: 24px;
+    font-weight: var(--ios-weight-bold);
+    color: var(--ios-blue);
+    margin-top: var(--ios-space-2);
+    letter-spacing: -0.04em;
+}
+
+/* ===== 统计栏（横向滚动） ===== */
+.stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ios-space-3);
+    padding: var(--ios-space-3) var(--ios-space-4);
+    background: var(--ios-bg);
+    margin: 0 var(--ios-space-4) var(--ios-space-3);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+}
+
+.stats-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 70px;
+    max-width: 100px;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    background: var(--ios-gray-bg);
+    border-radius: var(--ios-radius-lg);
+    transition: transform var(--ios-duration-fast) var(--ios-ease-bounce);
+}
+
+.stat-item:active {
+    transform: scale(0.95);
+}
+
+.stat-item .label {
+    font-size: var(--ios-text-xs);
+    color: var(--ios-gray);
+}
+
+.stat-item .value {
+    font-size: var(--ios-text-xl);
+    font-weight: var(--ios-weight-semibold);
+    color: var(--ios-blue);
+    margin-top: var(--ios-space-1);
+}
+
+/* ===== 信息行 ===== */
+.info-row {
+    display: flex;
+    width: 100%;
+}
+
+.info-row-label {
+    min-width: 90px;
+    flex-shrink: 0;
+    font-size: var(--ios-text-base);
+    color: var(--ios-gray);
+}
+
+.info-row-value {
+    flex: 1;
+    font-size: var(--ios-text-base);
+    color: var(--ios-text);
+    text-align: right;
+}
+
+/* ===== 现代化排序条 ===== */
+.sort-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--ios-space-2);
+    padding: var(--ios-space-3) var(--ios-space-4);
+    overflow-x: auto;
+    white-space: nowrap;
+    background: var(--ios-bg);
+    margin: 0 var(--ios-space-4) var(--ios-card-margin);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+}
+
+.sort-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.sort-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ios-space-2) var(--ios-space-4);
+    border-radius: var(--ios-radius-lg);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    color: var(--ios-gray-dark);
+    background: var(--ios-gray-bg);
+    border: none;
+    cursor: pointer;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.sort-item:active {
+    transform: scale(0.96);
+    background: var(--ios-separator-opaque);
+}
+
+.sort-item.active {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    color: var(--ios-bg);
+    box-shadow: var(--ios-shadow-md), 0 2px 8px rgba(0, 122, 255, 0.25);
+}
+
+.sort-item.active:active {
+    background: var(--ios-blue-dark);
+}
+
+.sort-item.asc::after {
+    content: " ↑";
+    font-size: var(--ios-text-xs);
+}
+
+.sort-item.desc::after {
+    content: " ↓";
+    font-size: var(--ios-text-xs);
+}
+
+/* ===== Apple 导出按钮 ===== */
+.export-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(120, 120, 128, 0.16);
+    border: none;
+    border-radius: 8px;
+    color: #007AFF;
+    cursor: pointer;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+}
+
+.export-btn:active {
+    transform: scale(0.96);
+}
+
+.export-btn.has-permission {
+    background: rgba(120, 120, 128, 0.16);
+    color: #007AFF;
+}
+
+.export-btn.has-permission:active {
+    background: rgba(120, 120, 128, 0.24);
+}
+
+.export-btn.no-permission {
+    background: rgba(120, 120, 128, 0.08);
+    color: rgba(60, 60, 67, 0.4);
+    cursor: not-allowed;
+}
+
+.export-btn.no-permission:active {
+    transform: none;
+}
+
+.export-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* 导出按钮带文字 - Apple 风格 */
+.export-btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #007AFF;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 40px;
+}
+
+.export-btn-text:active {
+    background: rgba(0, 122, 255, 0.85);
+    transform: scale(0.96);
+}
+
+.export-btn-text .export-icon {
+    width: 12px;
+    height: 12px;
+}
+
+/* ===== 现代化筛选面板 ===== */
+.filter-section {
+    background: var(--ios-bg);
+    margin: var(--ios-space-3) var(--ios-space-4);
+    border-radius: var(--ios-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--ios-shadow-card);
+}
+
+.filter-toggle-btn-main {
+    width: 100%;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    background: var(--ios-gray-bg);
+    border: none;
+    border-radius: var(--ios-radius-lg);
+    color: var(--ios-blue);
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-medium);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    min-height: 44px;
+}
+
+.filter-toggle-btn-main:active {
+    background: var(--ios-separator-opaque);
+    transform: scale(0.99);
+}
+
+.filter-panel {
+    display: none;
+    padding: var(--ios-space-4);
+    animation: iosSlideDown var(--ios-duration-normal) var(--ios-ease-out);
+}
+
+.filter-panel.show {
+    display: block;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ios-space-3);
+}
+
+.filter-grid.extended {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ios-space-3);
+}
+
+@media (max-width: 360px) {
+    .filter-grid.extended {
+        grid-template-columns: 1fr;
+    }
+}
+
+.filter-item {
+    margin-bottom: var(--ios-space-3);
+}
+
+.filter-item.full-width {
+    grid-column: span 2;
+}
+
+.filter-item label {
+    display: block;
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+    margin-bottom: var(--ios-space-2);
+    font-weight: var(--ios-weight-medium);
+}
+
+.filter-item input,
+.filter-item select {
+    width: 100%;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    border: none;
+    border-radius: var(--ios-radius-lg);
+    font-size: var(--ios-text-base);
+    background: var(--ios-gray-bg);
+    color: var(--ios-text);
+    min-height: 44px;
+    box-shadow: var(--ios-shadow-inset);
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+    outline: none;
+    background: var(--ios-bg);
+    box-shadow: inset 0 0 0 2px var(--ios-blue);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: var(--ios-space-3);
+    margin-top: var(--ios-space-4);
+}
+
+/* ===== 现代化加载更多 ===== */
+.load-more-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ios-space-4);
+    margin: 0 var(--ios-space-4) var(--ios-card-margin);
+    background: var(--ios-bg);
+    border-radius: var(--ios-radius-xl);
+    box-shadow: var(--ios-shadow-card);
+    text-align: center;
+    transition: transform var(--ios-duration-fast) var(--ios-ease);
+}
+
+.load-more-section:active {
+    transform: scale(0.98);
+}
+
+.load-more-text {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-gray);
+}
+
+.load-more-section.loading .load-more-text::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--ios-gray-bg);
+    border-top-color: var(--ios-blue);
+    border-radius: 50%;
+    animation: ios-spin 0.8s linear infinite;
+    margin-right: var(--ios-space-2);
+    vertical-align: middle;
+}
+
+.load-more-section.loading .load-more-text {
+    color: var(--ios-blue);
+}
+
+.load-more-section.completed .load-more-text {
+    color: var(--ios-gray);
+}
+
+.load-more-section.error .load-more-text {
+    color: var(--ios-red);
+}
+
+/* ===== Tab内容过渡 ===== */
+.tab-content {
+    display: none;
+    opacity: 0;
+    animation: iosFadeSlideIn var(--ios-duration-normal) var(--ios-ease-out) forwards;
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ===== 现代化状态标签 ===== */
+.status-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    margin-top: var(--ios-space-3);
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.status-tag.ongoing {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--ios-orange);
+}
+
+.status-tag.passed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+.status-tag.rejected {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--ios-red);
+}
+
+/* ===== 现代化筛选下拉框 ===== */
+.filter-select {
+    width: 100%;
+    padding: var(--ios-space-3) var(--ios-space-4);
+    border: none;
+    border-radius: var(--ios-radius-lg);
+    font-size: var(--ios-text-base);
+    background: var(--ios-gray-bg);
+    color: var(--ios-text);
+    cursor: pointer;
+    outline: none;
+    min-height: 44px;
+    box-shadow: var(--ios-shadow-inset);
+}
+
+.filter-select:focus {
+    background: var(--ios-bg);
+    box-shadow: inset 0 0 0 2px var(--ios-blue);
+}
+
+/* ===== 现代化关系类型标签 ===== */
+.relation-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    margin-right: var(--ios-space-2);
+}
+
+.relation-tag.colleague {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+.relation-tag.coauthor {
+    background: rgba(0, 122, 255, 0.15);
+    color: var(--ios-blue);
+}
+
+.relation-tag.alumni {
+    background: rgba(175, 82, 222, 0.15);
+    color: var(--ios-purple);
+}
+
+/* ===== 现代化舆情情感标签 ===== */
+.sentiment-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    margin-left: var(--ios-space-2);
+}
+
+.sentiment-tag.positive {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+.sentiment-tag.negative {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--ios-red);
+}
+
+.sentiment-tag.neutral {
+    background: var(--ios-gray-bg);
+    color: var(--ios-gray);
+}
+
+/* ===== 现代化院士徽章 ===== */
+.academician-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--ios-purple) 0%, var(--ios-purple-light) 100%);
+    color: var(--ios-bg);
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-xs);
+    font-weight: var(--ios-weight-medium);
+    letter-spacing: 0;
+    box-shadow: var(--ios-shadow-sm), 0 2px 6px rgba(175, 82, 222, 0.2);
+}
+
+/* ===== 现代化类型标签 ===== */
+.type-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    margin-top: var(--ios-space-3);
+}
+
+.type-tag.book {
+    background: rgba(0, 122, 255, 0.15);
+    color: var(--ios-blue);
+}
+
+.type-tag.journal {
+    background: rgba(175, 82, 222, 0.15);
+    color: var(--ios-purple);
+}
+
+.type-tag.digital {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+.type-tag.project {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+/* ===== 现代化预警卡片 ===== */
+.ios-card.risk-high {
+    background: linear-gradient(135deg, rgba(255, 59, 48, 0.08) 0%, rgba(255, 59, 48, 0.04) 100%);
+    border-left: 4px solid var(--ios-red);
+}
+
+.ios-card.risk-medium {
+    background: linear-gradient(135deg, rgba(255, 149, 0, 0.08) 0%, rgba(255, 149, 0, 0.04) 100%);
+    border-left: 4px solid var(--ios-orange);
+}
+
+.risk-title {
+    font-size: var(--ios-text-lg);
+    font-weight: var(--ios-weight-semibold);
+    color: var(--ios-red);
+}
+
+.ios-card.risk-medium .risk-title {
+    color: var(--ios-orange);
+}
+
+/* ===== 现代化预警徽章 ===== */
+.risk-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+}
+
+.risk-badge.high {
+    background: rgba(255, 59, 48, 0.2);
+    color: var(--ios-red);
+}
+
+.risk-badge.medium {
+    background: rgba(255, 149, 0, 0.2);
+    color: var(--ios-orange);
+}
+
+/* ===== 现代化处置状态徽章 ===== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--ios-radius-full);
+    font-size: var(--ios-text-sm);
+    font-weight: var(--ios-weight-medium);
+    margin-top: var(--ios-space-3);
+}
+
+.status-badge.unprocessed {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--ios-orange);
+}
+
+.status-badge.processed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--ios-green);
+}
+
+.status-badge.ignored {
+    background: var(--ios-gray-bg);
+    color: var(--ios-gray);
+}
+
+/* ===== 现代化卡片列表 ===== */
+.card-list {
+    padding: 0 var(--ios-space-4);
+}
+
+/* ===== 列表项头像 ===== */
+.teacher-avatar,
+.university-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--ios-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--ios-weight-semibold);
+    flex-shrink: 0;
+    transition: transform var(--ios-duration-fast) var(--ios-ease-bounce);
+}
+
+.teacher-avatar {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    color: white;
+    font-size: var(--ios-text-lg);
+}
+
+.university-avatar {
+    background: linear-gradient(135deg, var(--ios-indigo) 0%, var(--ios-indigo-light) 100%);
+    color: white;
+    font-size: var(--ios-text-base);
+}
+
+/* ===== 选择模式按钮 ===== */
+.select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--ios-gray-bg);
+    border: none;
+    border-radius: var(--ios-radius-lg);
+    color: var(--ios-blue);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all var(--ios-duration-fast) var(--ios-ease-bounce);
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.select-btn:active {
+    background: var(--ios-bg);
+    transform: scale(0.95);
+}
+
+.select-btn.active {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    color: white;
+    box-shadow: var(--ios-shadow-md);
+}
+
+/* ===== 选择操作栏 ===== */
+.select-action-bar {
+    display: none;
+    position: fixed;
+    bottom: calc(var(--ios-nav-height) + var(--ios-safe-area-bottom) + var(--ios-space-2));
+    left: var(--ios-space-4);
+    right: var(--ios-space-4);
+    background: var(--ios-bg);
+    border-radius: var(--ios-radius-xl);
+    padding: var(--ios-space-3) var(--ios-space-4);
+    box-shadow: var(--ios-shadow-xl);
+    z-index: 40;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: var(--ios-blur-normal);
+    -webkit-backdrop-filter: var(--ios-blur-normal);
+    border: 1px solid var(--ios-separator-opaque);
+}
+
+.select-action-bar.show {
+    display: flex;
+    animation: iosSlideUp var(--ios-duration-normal) var(--ios-ease-out);
+}
+
+.select-info {
+    font-size: var(--ios-text-sm);
+    color: var(--ios-text);
+}
+
+.select-info strong {
+    color: var(--ios-blue);
+    font-weight: var(--ios-weight-semibold);
+}
+
+.select-actions {
+    display: flex;
+    gap: var(--ios-space-2);
+}
+
+/* ===== 现代化复选框 ===== */
+.teacher-checkbox,
+.university-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--ios-gray);
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--ios-duration-fast) var(--ios-ease);
+    background: var(--ios-bg);
+    box-shadow: var(--ios-shadow-sm);
+}
+
+.teacher-checkbox.checked,
+.university-checkbox.checked {
+    background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+    border-color: var(--ios-blue);
+    box-shadow: var(--ios-shadow-md);
+}
+
+.teacher-checkbox.checked::after,
+.university-checkbox.checked::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: iosScaleIn var(--ios-duration-fast) var(--ios-ease-bounce);
+}
+
+/* ===== 下拉刷新容器 ===== */
+.ios-pull-refresh {
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: calc(100vh - var(--ios-nav-height));
+}
+
+/* ===== 纠错历史区域 ===== */
+.correction-history {
+    margin-top: var(--ios-space-5);
+    background: transparent;
+}
+
+/* ===== 现代化页面装饰 ===== */
+.ios-page-decoration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at top right, rgba(0, 122, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}

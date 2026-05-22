@@ -1,0 +1,1314 @@
+/**
+ * Apple Design Style CSS v3.0 - 苹果设计风格
+ * 升级日期: 2026-05-18
+ * 设计风格: Apple Human Interface Guidelines
+ */
+
+/* ===== Apple 设计系统变量 ===== */
+:root {
+    /* Apple 标准色系 */
+    --apple-blue: #007AFF;
+    --apple-green: #34C759;
+    --apple-orange: #FF9500;
+    --apple-red: #FF3B30;
+    --apple-purple: #AF52DE;
+    --apple-pink: #FF2D55;
+    --apple-teal: #5AC8FA;
+    --apple-indigo: #5856D6;
+    --apple-pink: #FF2D55;
+    --apple-teal: #5AC8FA;
+
+    /* 额外兼容变量 */
+    --ios-blue-dark: #0051D5;
+    --ios-blue-light: #5AC8FA;
+    --ios-green-light: #66D47E;
+    --ios-red-light: #FF6961;
+    --ios-orange-light: #FFB340;
+    --ios-purple-light: #C77DEB;
+    --ios-indigo-light: #7B79E8;
+    --ios-radius-lg: 16px;
+    --ios-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ios-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    /* Apple 灰色系统 */
+    --apple-gray-1: #8E8E93;
+    --apple-gray-2: #AEAEB2;
+    --apple-gray-3: #C7C7CC;
+    --apple-gray-4: #D1D1D6;
+    --apple-gray-5: #E5E5EA;
+    --apple-gray-6: #F2F2F7;
+
+    /* Apple 背景 */
+    --apple-bg-primary: #FFFFFF;
+    --apple-bg-secondary: #F2F2F7;
+    --apple-bg-tertiary: #FFFFFF;
+    --apple-bg-grouped: #F2F2F7;
+    --apple-bg-grouped-secondary: #FFFFFF;
+
+    /* Apple 文字 */
+    --apple-text-primary: #000000;
+    --apple-text-secondary: #3C3C43;
+    --apple-text-tertiary: #3C3C4399;
+    --apple-text-quaternary: #3C3C434D;
+
+    /* Apple 分隔线 */
+    --apple-separator: rgba(60, 60, 67, 0.12);
+    --apple-separator-opaque: #C6C6C8;
+
+    /* Apple 填充 */
+    --apple-fill-primary: rgba(120, 120, 128, 0.2);
+    --apple-fill-secondary: rgba(120, 120, 128, 0.16);
+    --apple-fill-tertiary: rgba(118, 118, 128, 0.12);
+    --apple-fill-quaternary: rgba(116, 116, 128, 0.08);
+
+    /* 圆角系统 - Apple 标准 */
+    --apple-radius-small: 8px;
+    --apple-radius-medium: 12px;
+    --apple-radius-large: 16px;
+    --apple-radius-xlarge: 20px;
+    --apple-radius-continuous: 22px; /* Apple 连续圆角 */
+    --apple-radius-full: 999px;
+
+    /* 阴影系统 - Apple 柔和阴影 */
+    --apple-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --apple-shadow-default: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --apple-shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --apple-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.16);
+
+    /* 间距系统 */
+    --apple-spacing-xs: 4px;
+    --apple-spacing-sm: 8px;
+    --apple-spacing-md: 12px;
+    --apple-spacing-lg: 16px;
+    --apple-spacing-xl: 20px;
+    --apple-spacing-2xl: 24px;
+    --apple-spacing-3xl: 32px;
+
+    /* 字体系统 - SF Pro 风格 */
+    --apple-font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    --apple-font-size-caption2: 11px;
+    --apple-font-size-caption1: 12px;
+    --apple-font-size-footnote: 13px;
+    --apple-font-size-subhead: 15px;
+    --apple-font-size-body: 17px;
+    --apple-font-size-headline: 17px;
+    --apple-font-size-title3: 20px;
+    --apple-font-size-title2: 22px;
+    --apple-font-size-title1: 28px;
+    --apple-font-size-large-title: 34px;
+
+    /* 字重 */
+    --apple-weight-regular: 400;
+    --apple-weight-medium: 500;
+    --apple-weight-semibold: 600;
+    --apple-weight-bold: 700;
+
+    /* 行高 */
+    --apple-lineheight-tight: 1.2;
+    --apple-lineheight-normal: 1.4;
+    --apple-lineheight-relaxed: 1.5;
+
+    /* 动效 - Apple 流畅曲线 */
+    --apple-duration-fast: 0.15s;
+    --apple-duration-normal: 0.25s;
+    --apple-duration-slow: 0.35s;
+    --apple-duration-modal: 0.4s;
+    --apple-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --apple-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --apple-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --apple-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* 毛玻璃 */
+    --apple-blur-light: blur(20px);
+    --apple-blur-medium: blur(40px);
+    --apple-blur-heavy: blur(60px);
+
+    /* 导航高度 */
+    --apple-nav-height: 49px;
+    --apple-header-height: 44px;
+    --apple-header-large-height: 96px;
+    --apple-safe-area: env(safe-area-inset-bottom, 0);
+
+    /* 兼容旧变量名 */
+    --ios-blue: var(--apple-blue);
+    --ios-green: var(--apple-green);
+    --ios-orange: var(--apple-orange);
+    --ios-red: var(--apple-red);
+    --ios-purple: var(--apple-purple);
+    --ios-indigo: var(--apple-indigo);
+    --ios-teal: var(--apple-teal);
+    --ios-gray: var(--apple-gray-1);
+    --ios-gray-bg: var(--apple-gray-6);
+    --ios-gray-dark: var(--apple-gray-2);
+    --ios-bg: var(--apple-bg-primary);
+    --ios-bg-secondary: var(--apple-bg-secondary);
+    --ios-text: var(--apple-text-primary);
+    --ios-text-secondary: var(--apple-text-secondary);
+    --ios-separator: var(--apple-separator);
+    --ios-separator-opaque: var(--apple-separator-opaque);
+    --ios-shadow-card: var(--apple-shadow-default);
+    --ios-shadow-1: var(--apple-shadow-subtle);
+    --ios-shadow-2: var(--apple-shadow-default);
+    --ios-shadow-3: var(--apple-shadow-elevated);
+    --ios-shadow-modal: var(--apple-shadow-modal);
+    --ios-shadow-nav: 0 -1px 0 var(--apple-separator);
+    --ios-shadow-md: var(--apple-shadow-default);
+    --ios-shadow-sm: var(--apple-shadow-subtle);
+    --ios-radius-1: var(--apple-radius-small);
+    --ios-radius-2: var(--apple-radius-medium);
+    --ios-radius-3: var(--apple-radius-large);
+    --ios-radius-4: var(--apple-radius-xlarge);
+    --ios-radius-full: var(--apple-radius-full);
+    --ios-space-1: var(--apple-spacing-xs);
+    --ios-space-2: var(--apple-spacing-sm);
+    --ios-space-3: var(--apple-spacing-md);
+    --ios-space-4: var(--apple-spacing-lg);
+    --ios-space-5: var(--apple-spacing-xl);
+    --ios-space-6: var(--apple-spacing-2xl);
+    --ios-text-xs: var(--apple-font-size-caption2);
+    --ios-text-sm: var(--apple-font-size-footnote);
+    --ios-text-base: var(--apple-font-size-subhead);
+    --ios-text-lg: var(--apple-font-size-body);
+    --ios-text-xl: var(--apple-font-size-title3);
+    --ios-text-2xl: var(--apple-font-size-title1);
+    --ios-weight-normal: var(--apple-weight-regular);
+    --ios-weight-medium: var(--apple-weight-medium);
+    --ios-weight-semibold: var(--apple-weight-semibold);
+    --ios-weight-bold: var(--apple-weight-bold);
+    --ios-leading-normal: var(--apple-lineheight-normal);
+    --ios-duration-fast: var(--apple-duration-fast);
+    --ios-duration-normal: var(--apple-duration-normal);
+    --ios-duration-slow: var(--apple-duration-slow);
+    --ios-ease: var(--apple-ease);
+    --ios-ease-out: var(--apple-ease-out);
+    --ios-icon-sm: 16px;
+    --ios-icon-base: 20px;
+    --ios-icon-lg: 24px;
+    --ios-card-margin: var(--apple-spacing-md);
+    --ios-card-padding: var(--apple-spacing-lg);
+}
+
+/* ===== Apple 页面基础 ===== */
+body {
+    font-family: var(--apple-font-system);
+    font-size: var(--apple-font-size-body);
+    line-height: var(--apple-lineheight-normal);
+    color: var(--apple-text-primary);
+    background-color: var(--apple-bg-secondary);
+    min-width: 375px;
+    max-width: 428px;
+    margin: 0 auto;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== Apple 毛玻璃导航栏 ===== */
+.apple-tab-nav {
+    position: fixed;
+    bottom: 0;
+    max-width: 428px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: var(--apple-nav-height);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: var(--apple-blur-light);
+    -webkit-backdrop-filter: var(--apple-blur-light);
+    border-top: 0.5px solid var(--apple-separator);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: var(--apple-safe-area);
+    z-index: 100;
+}
+
+/* 兼容旧类名 */
+.ios-tab-nav {
+    position: fixed;
+    bottom: 0;
+    max-width: 428px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: var(--apple-nav-height);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: var(--apple-blur-light);
+    -webkit-backdrop-filter: var(--apple-blur-light);
+    border-top: 0.5px solid var(--apple-separator);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: var(--apple-safe-area);
+    z-index: 100;
+}
+
+.ios-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    min-height: 44px;
+    padding: var(--apple-spacing-xs) var(--apple-spacing-sm);
+    cursor: pointer;
+    transition: transform var(--apple-duration-fast) var(--apple-ease-spring);
+}
+
+.ios-tab-item:active {
+    transform: scale(0.92);
+}
+
+.ios-tab-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--apple-gray-1);
+    transition: color var(--apple-duration-normal) var(--apple-ease);
+}
+
+.ios-tab-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ios-tab-item.active .ios-tab-icon {
+    color: var(--apple-blue);
+}
+
+.ios-tab-label {
+    font-size: var(--apple-font-size-caption2);
+    font-weight: var(--apple-weight-medium);
+    color: var(--apple-gray-1);
+    margin-top: 2px;
+    letter-spacing: 0.01em;
+    transition: color var(--apple-duration-normal) var(--apple-ease);
+}
+
+.ios-tab-item.active .ios-tab-label {
+    color: var(--apple-blue);
+}
+
+/* ===== Apple 大标题头部 ===== */
+.ios-header-large {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: var(--apple-blur-light);
+    -webkit-backdrop-filter: var(--apple-blur-light);
+    padding: var(--apple-spacing-sm) var(--apple-spacing-lg) var(--apple-spacing-md);
+    border-bottom: 0.5px solid var(--apple-separator);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.ios-header-large-title {
+    font-size: var(--apple-font-size-large-title);
+    font-weight: var(--apple-weight-bold);
+    color: var(--apple-text-primary);
+    letter-spacing: -0.04em;
+    line-height: var(--apple-lineheight-tight);
+    margin-top: var(--apple-spacing-sm);
+}
+
+/* ===== Apple 顶部导航栏 ===== */
+.ios-header {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: var(--apple-blur-light);
+    -webkit-backdrop-filter: var(--apple-blur-light);
+    padding: 0 var(--apple-spacing-lg);
+    height: var(--apple-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 0.5px solid var(--apple-separator);
+}
+
+.ios-header-title {
+    font-size: var(--apple-font-size-headline);
+    font-weight: var(--apple-weight-semibold);
+    color: var(--apple-text-primary);
+    text-align: center;
+    flex: 1;
+    letter-spacing: -0.02em;
+}
+
+.ios-header-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--apple-blue);
+    font-size: var(--apple-font-size-body);
+    font-weight: var(--apple-weight-regular);
+    cursor: pointer;
+    transition: opacity var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-header-btn:active {
+    opacity: 0.5;
+}
+
+/* ===== Apple 卡片 ===== */
+.ios-card {
+    background: var(--apple-bg-primary);
+    border-radius: var(--apple-radius-large);
+    margin: 0 0 var(--apple-spacing-md) 0;
+    overflow: hidden;
+}
+
+.ios-card-content {
+    padding: var(--apple-spacing-lg);
+}
+
+.ios-card-interactive {
+    cursor: pointer;
+    transition: background var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-card-interactive:active {
+    background: var(--apple-fill-quaternary);
+}
+
+/* ===== Apple 列表 ===== */
+.ios-list {
+    background: var(--apple-bg-primary);
+    border-radius: var(--apple-radius-large);
+    margin: 0 0 var(--apple-spacing-md) 0;
+    overflow: hidden;
+}
+
+.ios-list-item {
+    display: flex;
+    align-items: center;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    min-height: 44px;
+    cursor: pointer;
+    position: relative;
+    transition: background var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-list-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: var(--apple-spacing-lg);
+    right: var(--apple-spacing-lg);
+    height: 0.5px;
+    background: var(--apple-separator);
+}
+
+.ios-list-item:active {
+    background: var(--apple-fill-tertiary);
+}
+
+.ios-list-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--apple-blue);
+    margin-right: var(--apple-spacing-lg);
+}
+
+.ios-list-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.ios-list-title {
+    font-size: var(--apple-font-size-body);
+    font-weight: var(--apple-weight-regular);
+    color: var(--apple-text-primary);
+}
+
+.ios-list-subtitle {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+    margin-top: 2px;
+}
+
+.ios-list-chevron {
+    width: 8px;
+    height: 13px;
+    margin-left: var(--apple-spacing-sm);
+    color: var(--apple-gray-3);
+}
+
+.ios-list-right {
+    font-size: var(--apple-font-size-subhead);
+    color: var(--apple-gray-1);
+    margin-left: var(--apple-spacing-sm);
+}
+
+/* ===== Apple 按钮 ===== */
+.ios-btn-capsule {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--apple-spacing-md) var(--apple-spacing-xl);
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-subhead);
+    font-weight: var(--apple-weight-medium);
+    cursor: pointer;
+    min-height: 44px;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-btn-capsule:active {
+    transform: scale(0.98);
+}
+
+.ios-btn-capsule.primary {
+    background: var(--apple-blue);
+    color: white;
+}
+
+.ios-btn-capsule.primary:active {
+    background: rgba(0, 122, 255, 0.8);
+}
+
+.ios-btn-capsule.secondary {
+    background: transparent;
+    color: var(--apple-blue);
+}
+
+.ios-btn-capsule.secondary:active {
+    background: var(--apple-fill-tertiary);
+}
+
+.ios-btn-capsule.gray {
+    background: var(--apple-fill-secondary);
+    color: var(--apple-text-primary);
+}
+
+.ios-btn-capsule.gray:active {
+    background: var(--apple-fill-primary);
+}
+
+.ios-btn-capsule.danger {
+    background: var(--apple-red);
+    color: white;
+}
+
+.ios-btn-capsule.danger:active {
+    background: rgba(255, 59, 48, 0.8);
+}
+
+.ios-btn-capsule.small {
+    padding: var(--apple-spacing-sm) var(--apple-spacing-md);
+    font-size: var(--apple-font-size-footnote);
+    min-height: 32px;
+    border-radius: var(--apple-radius-medium);
+}
+
+/* ===== Apple 输入框 ===== */
+.ios-input {
+    width: 100%;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    border: none;
+    border-radius: var(--apple-radius-medium);
+    font-size: var(--apple-font-size-subhead);
+    color: var(--apple-text-primary);
+    background: var(--apple-fill-tertiary);
+    outline: none;
+    min-height: 44px;
+    transition: background var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-input:focus {
+    background: var(--apple-fill-secondary);
+}
+
+.ios-input::placeholder {
+    color: var(--apple-gray-1);
+}
+
+/* ===== Apple 徽章 ===== */
+.ios-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-caption2);
+    font-weight: var(--apple-weight-medium);
+    min-width: 18px;
+}
+
+.ios-badge.success {
+    background: var(--apple-green);
+    color: white;
+}
+
+.ios-badge.warning {
+    background: var(--apple-orange);
+    color: white;
+}
+
+.ios-badge.danger {
+    background: var(--apple-red);
+    color: white;
+}
+
+.ios-badge.info {
+    background: var(--apple-blue);
+    color: white;
+}
+
+.ios-badge.gray {
+    background: var(--apple-fill-secondary);
+    color: var(--apple-gray-1);
+}
+
+/* Apple 状态文字 */
+.ios-status-text {
+    font-size: var(--apple-font-size-footnote);
+    font-weight: var(--apple-weight-medium);
+}
+
+.ios-status-text.success { color: var(--apple-green); }
+.ios-status-text.warning { color: var(--apple-orange); }
+.ios-status-text.danger { color: var(--apple-red); }
+.ios-status-text.info { color: var(--apple-blue); }
+.ios-status-text.gray { color: var(--apple-gray-1); }
+
+/* ===== Apple 弹窗 ===== */
+.ios-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--apple-duration-modal) var(--apple-ease);
+}
+
+.ios-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ios-modal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: var(--apple-blur-medium);
+    -webkit-backdrop-filter: var(--apple-blur-medium);
+    border-radius: 14px;
+    width: 270px;
+    overflow: hidden;
+    transform: scale(0.85);
+    opacity: 0;
+    transition: all var(--apple-duration-modal) var(--apple-ease-spring);
+}
+
+.ios-modal-overlay.show .ios-modal {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.ios-modal-header {
+    padding: var(--apple-spacing-lg) var(--apple-spacing-lg) var(--apple-spacing-sm);
+    text-align: center;
+}
+
+.ios-modal-title {
+    font-size: var(--apple-font-size-headline);
+    font-weight: var(--apple-weight-semibold);
+    color: var(--apple-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.ios-modal-body {
+    padding: var(--apple-spacing-sm) var(--apple-spacing-lg) var(--apple-spacing-lg);
+    text-align: center;
+}
+
+.ios-modal-text {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-text-secondary);
+    line-height: var(--apple-lineheight-normal);
+}
+
+.ios-modal-footer {
+    display: flex;
+    border-top: 0.5px solid var(--apple-separator);
+}
+
+.ios-modal-btn {
+    flex: 1;
+    padding: var(--apple-spacing-lg);
+    font-size: var(--apple-font-size-body);
+    font-weight: var(--apple-weight-regular);
+    text-align: center;
+    cursor: pointer;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-modal-btn:not(:last-child) {
+    border-right: 0.5px solid var(--apple-separator);
+}
+
+.ios-modal-btn:active {
+    background: var(--apple-fill-tertiary);
+}
+
+.ios-modal-btn.cancel { color: var(--apple-blue); }
+.ios-modal-btn.confirm { color: var(--apple-blue); font-weight: var(--apple-weight-semibold); }
+.ios-modal-btn.destructive { color: var(--apple-red); }
+
+.ios-modal-large {
+    width: 320px;
+    max-width: 90vw;
+}
+
+/* ===== Apple 筛选区域 ===== */
+.filter-section {
+    background: var(--apple-bg-primary);
+    margin: var(--apple-spacing-md) var(--apple-spacing-lg);
+    border-radius: var(--apple-radius-large);
+    overflow: hidden;
+}
+
+.filter-toggle-btn-main {
+    width: 100%;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    background: transparent;
+    border: none;
+    color: var(--apple-blue);
+    font-size: var(--apple-font-size-body);
+    font-weight: var(--apple-weight-medium);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 44px;
+}
+
+.filter-toggle-btn-main:active {
+    background: var(--apple-fill-tertiary);
+}
+
+.filter-panel {
+    display: none;
+    padding: var(--apple-spacing-lg);
+}
+
+.filter-panel.show {
+    display: block;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--apple-spacing-md);
+}
+
+.filter-item {
+    margin-bottom: var(--apple-spacing-md);
+}
+
+.filter-item.full-width {
+    grid-column: span 2;
+}
+
+.filter-item label {
+    display: block;
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+    margin-bottom: var(--apple-spacing-sm);
+}
+
+.filter-item input,
+.filter-item select {
+    width: 100%;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    border: none;
+    border-radius: var(--apple-radius-medium);
+    font-size: var(--apple-font-size-subhead);
+    background: var(--apple-fill-tertiary);
+    color: var(--apple-text-primary);
+    min-height: 44px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: var(--apple-spacing-md);
+    margin-top: var(--apple-spacing-lg);
+}
+
+/* ===== Apple 统计栏 ===== */
+.stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--apple-spacing-md);
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    background: var(--apple-bg-primary);
+    margin: 0 var(--apple-spacing-lg) var(--apple-spacing-md);
+    border-radius: var(--apple-radius-large);
+}
+
+.stats-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 70px;
+    max-width: 100px;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    background: var(--apple-fill-tertiary);
+    border-radius: var(--apple-radius-medium);
+}
+
+.stat-item .label {
+    font-size: var(--apple-font-size-caption2);
+    color: var(--apple-gray-1);
+}
+
+.stat-item .value {
+    font-size: var(--apple-font-size-title3);
+    font-weight: var(--apple-weight-semibold);
+    color: var(--apple-blue);
+    margin-top: var(--apple-spacing-xs);
+}
+
+/* ===== Apple 排序条 ===== */
+.sort-bar {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--apple-spacing-sm);
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    overflow-x: auto;
+    white-space: nowrap;
+    background: var(--apple-bg-primary);
+    margin: 0 var(--apple-spacing-lg) var(--apple-spacing-md);
+    border-radius: var(--apple-radius-large);
+    scrollbar-width: none;
+}
+
+.sort-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.sort-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--apple-spacing-sm) var(--apple-spacing-md);
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-footnote);
+    font-weight: var(--apple-weight-medium);
+    color: var(--apple-text-secondary);
+    background: var(--apple-fill-tertiary);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.sort-item:active {
+    transform: scale(0.96);
+}
+
+.sort-item.active {
+    background: var(--apple-blue);
+    color: white;
+}
+
+.sort-item.asc::after { content: " ↑"; font-size: 10px; }
+.sort-item.desc::after { content: " ↓"; font-size: 10px; }
+
+/* ===== Apple 导出按钮 ===== */
+.export-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(120, 120, 128, 0.16);
+    border: none;
+    border-radius: 8px;
+    color: #007AFF;
+    cursor: pointer;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.export-btn:active {
+    transform: scale(0.96);
+}
+
+.export-btn.has-permission {
+    background: rgba(120, 120, 128, 0.16);
+    color: #007AFF;
+}
+
+.export-btn.has-permission:active {
+    background: rgba(120, 120, 128, 0.24);
+}
+
+.export-btn.no-permission {
+    background: rgba(120, 120, 128, 0.08);
+    color: rgba(60, 60, 67, 0.4);
+    cursor: not-allowed;
+}
+
+.export-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Apple 选择按钮 ===== */
+.select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(120, 120, 128, 0.16);
+    border: none;
+    border-radius: 8px;
+    color: #007AFF;
+    cursor: pointer;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.select-btn:active {
+    transform: scale(0.96);
+}
+
+.select-btn.active {
+    background: var(--apple-blue);
+    color: white;
+}
+
+/* ===== Apple 选择操作栏 ===== */
+.select-action-bar {
+    display: none;
+    position: fixed;
+    bottom: calc(var(--apple-nav-height) + var(--apple-safe-area) + var(--apple-spacing-sm));
+    left: var(--apple-spacing-lg);
+    right: var(--apple-spacing-lg);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: var(--apple-blur-light);
+    -webkit-backdrop-filter: var(--apple-blur-light);
+    border-radius: var(--apple-radius-large);
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    box-shadow: var(--apple-shadow-elevated);
+    z-index: 40;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.5px solid var(--apple-separator);
+}
+
+.select-action-bar.show {
+    display: flex;
+}
+
+.select-info {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-text-primary);
+}
+
+.select-info strong {
+    color: var(--apple-blue);
+    font-weight: var(--apple-weight-semibold);
+}
+
+.select-actions {
+    display: flex;
+    gap: var(--apple-spacing-sm);
+}
+
+/* ===== Apple 加载更多 ===== */
+.load-more-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--apple-spacing-lg);
+    margin: 0 var(--apple-spacing-lg) var(--apple-spacing-md);
+    background: var(--apple-bg-primary);
+    border-radius: var(--apple-radius-large);
+}
+
+.load-more-text {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+}
+
+.load-more-section.loading .load-more-text::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--apple-fill-tertiary);
+    border-top-color: var(--apple-blue);
+    border-radius: 50%;
+    animation: apple-spin 0.8s linear infinite;
+    margin-right: var(--apple-spacing-sm);
+    vertical-align: middle;
+}
+
+@keyframes apple-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Apple 复选框 ===== */
+.teacher-checkbox,
+.university-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--apple-gray-3);
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+    background: transparent;
+}
+
+.teacher-checkbox.checked,
+.university-checkbox.checked {
+    background: var(--apple-blue);
+    border-color: var(--apple-blue);
+}
+
+.teacher-checkbox.checked::after,
+.university-checkbox.checked::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+/* ===== Apple 列表项 ===== */
+.teacher-item,
+.university-item {
+    display: flex;
+    align-items: center;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    min-height: 44px;
+    cursor: pointer;
+    position: relative;
+    transition: background var(--apple-duration-fast) var(--apple-ease);
+}
+
+.teacher-item:active,
+.university-item:active {
+    background: var(--apple-fill-tertiary);
+}
+
+.teacher-avatar,
+.university-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--apple-radius-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: var(--apple-weight-semibold);
+    margin-right: var(--apple-spacing-md);
+    flex-shrink: 0;
+}
+
+.teacher-avatar {
+    background: var(--apple-blue);
+    font-size: var(--apple-font-size-body);
+}
+
+.university-avatar {
+    background: var(--apple-indigo);
+    font-size: var(--apple-font-size-subhead);
+}
+
+.teacher-content,
+.university-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.teacher-name,
+.university-name {
+    font-size: var(--apple-font-size-body);
+    font-weight: var(--apple-weight-regular);
+    color: var(--apple-text-primary);
+}
+
+.teacher-org,
+.university-info {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+    margin-top: 2px;
+}
+
+.teacher-chevron,
+.university-chevron {
+    width: 8px;
+    height: 13px;
+    margin-left: var(--apple-spacing-sm);
+    color: var(--apple-gray-3);
+}
+
+/* ===== Apple Tab 内容 ===== */
+.tab-content {
+    display: none;
+    opacity: 0;
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ===== Apple 下拉刷新 ===== */
+.ios-pull-refresh {
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: calc(100vh - var(--apple-nav-height));
+}
+
+/* ===== Apple 卡片列表 ===== */
+.card-list {
+    padding: 0 var(--apple-spacing-lg);
+}
+
+/* ===== Apple 院士徽章 ===== */
+.academician-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: var(--apple-purple);
+    color: white;
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-caption2);
+    font-weight: var(--apple-weight-medium);
+}
+
+/* ===== Apple 预警卡片 ===== */
+.ios-card.risk-high {
+    background: rgba(255, 59, 48, 0.08);
+    border-left: 4px solid var(--apple-red);
+}
+
+.ios-card.risk-medium {
+    background: rgba(255, 149, 0, 0.08);
+    border-left: 4px solid var(--apple-orange);
+}
+
+.risk-badge {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-footnote);
+    font-weight: var(--apple-weight-medium);
+}
+
+.risk-badge.high {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--apple-red);
+}
+
+.risk-badge.medium {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--apple-orange);
+}
+
+.status-badge {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-footnote);
+    font-weight: var(--apple-weight-medium);
+    margin-top: var(--apple-spacing-md);
+}
+
+.status-badge.unprocessed {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--apple-orange);
+}
+
+.status-badge.processed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--apple-green);
+}
+
+.status-badge.ignored {
+    background: var(--apple-fill-tertiary);
+    color: var(--apple-gray-1);
+}
+
+/* ===== Apple 分段控制器 ===== */
+.ios-segment-scroll {
+    background: var(--apple-bg-primary);
+    padding: var(--apple-spacing-sm) var(--apple-spacing-lg);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.ios-segment-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.ios-segment-control {
+    display: inline-flex;
+    background: var(--apple-fill-tertiary);
+    border-radius: var(--apple-radius-full);
+    padding: 2px;
+}
+
+.ios-segment-item {
+    padding: var(--apple-spacing-sm) var(--apple-spacing-md);
+    border-radius: var(--apple-radius-full);
+    font-size: var(--apple-font-size-footnote);
+    font-weight: var(--apple-weight-medium);
+    color: var(--apple-text-secondary);
+    cursor: pointer;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.ios-segment-item.active {
+    background: var(--apple-bg-primary);
+    color: var(--apple-text-primary);
+}
+
+/* ===== Apple 动画 ===== */
+@keyframes appleSlideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0.95;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes appleFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ios-animate-slide-down {
+    animation: appleFadeIn var(--apple-duration-normal) var(--apple-ease-out);
+}
+
+/* ===== Apple 页面内容 ===== */
+.ios-page-content {
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    padding-bottom: calc(var(--apple-nav-height) + var(--apple-safe-area) + var(--apple-spacing-xl));
+}
+
+/* ===== Apple 导出弹窗选项 ===== */
+.export-options {
+    margin-top: var(--apple-spacing-lg);
+    border-top: 0.5px solid var(--apple-separator);
+    padding-top: var(--apple-spacing-md);
+}
+
+.export-option-group {
+    margin-bottom: var(--apple-spacing-lg);
+}
+
+.export-option-label {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+    margin-bottom: var(--apple-spacing-sm);
+    font-weight: var(--apple-weight-medium);
+}
+
+.export-range-options {
+    display: flex;
+    gap: var(--apple-spacing-md);
+}
+
+.export-range-btn {
+    flex: 1;
+    padding: var(--apple-spacing-md) var(--apple-spacing-lg);
+    border: none;
+    border-radius: var(--apple-radius-medium);
+    background: var(--apple-fill-tertiary);
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-text-primary);
+    cursor: pointer;
+    transition: all var(--apple-duration-fast) var(--apple-ease);
+}
+
+.export-range-btn.active {
+    background: var(--apple-blue);
+    color: white;
+}
+
+.export-count-input {
+    display: flex;
+    align-items: center;
+    gap: var(--apple-spacing-md);
+}
+
+.export-count-input input {
+    width: 80px;
+    padding: var(--apple-spacing-sm) var(--apple-spacing-md);
+    border: none;
+    border-radius: var(--apple-radius-medium);
+    font-size: var(--apple-font-size-subhead);
+    background: var(--apple-fill-tertiary);
+    text-align: center;
+}
+
+.export-count-input input:focus {
+    outline: none;
+    background: var(--apple-fill-secondary);
+}
+
+.export-count-label {
+    font-size: var(--apple-font-size-footnote);
+    color: var(--apple-gray-1);
+}
+
+/* ===== Apple 兼容旧版页面 ===== */
+body {
+    padding-bottom: 60px;
+}
+
+.ios-page-container {
+    max-width: 428px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--apple-bg-secondary);
+}
+
+.ios-content-area {
+    padding-bottom: calc(var(--apple-nav-height) + var(--apple-safe-area) + var(--apple-spacing-xl));
+    min-height: calc(100vh - var(--apple-header-large-height));
+}

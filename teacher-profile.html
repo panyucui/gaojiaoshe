@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>作者画像 - 作者管理应用系统</title>
+
+    
+    <link rel="stylesheet" href="css/ios-navigation.css">
+    <link rel="stylesheet" href="css/ios-components.css">
+    <link rel="stylesheet" href="css/gesture-system.css">
+
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--ios-bg-secondary);
+            color: var(--ios-text);
+            padding-bottom: 104px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        
+        .ios-header {
+            background: var(--ios-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 0 var(--ios-space-4);
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.5px solid var(--ios-separator-opaque);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .ios-header-title {
+            font-size: var(--ios-text-lg);
+            font-weight: var(--ios-weight-semibold);
+            color: var(--ios-text);
+            text-align: center;
+            flex: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .ios-header-btn {
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ios-blue);
+            font-size: var(--ios-text-lg);
+            cursor: pointer;
+            transition: opacity var(--ios-duration-fast) var(--ios-ease);
+        }
+
+        .ios-header-btn:active {
+            opacity: 0.6;
+        }
+
+        
+        .profile-header {
+            background: var(--ios-bg);
+            padding: var(--ios-space-4);
+            display: flex;
+            gap: var(--ios-space-3);
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--ios-radius-3);
+            background: var(--ios-purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--ios-text-2xl);
+            font-weight: var(--ios-weight-semibold);
+            flex-shrink: 0;
+        }
+
+        .info-section {
+            flex: 1;
+        }
+
+        .name-row {
+            display: flex;
+            align-items: center;
+            gap: var(--ios-space-2);
+            flex-wrap: wrap;
+        }
+
+        .name {
+            font-size: var(--ios-text-xl);
+            font-weight: var(--ios-weight-semibold);
+            color: var(--ios-text);
+        }
+
+        .tag {
+            padding: 2px 8px;
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--ios-blue);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .academician-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px var(--ios-space-2);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: var(--ios-radius-full);
+            font-size: 11px;
+            font-weight: var(--ios-weight-medium);
+        }
+
+        .info-meta {
+            font-size: 14px;
+            color: var(--ios-gray);
+            margin-top: var(--ios-space-1);
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .info-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .info-meta-item label {
+            color: #999;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: var(--ios-space-2);
+            margin-top: var(--ios-space-2);
+            flex-wrap: wrap;
+        }
+
+        
+        .ios-segment-scroll {
+            background: var(--ios-bg);
+            padding: var(--ios-space-2) var(--ios-space-4);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            border-bottom: 0.5px solid var(--ios-separator-opaque);
+        }
+
+        .ios-segment-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ios-segment-control.scrollable {
+            display: inline-flex;
+            min-width: 100%;
+        }
+
+        .ios-segment-item.scrollable {
+            flex: none;
+            min-width: 70px;
+            padding: 8px 12px;
+        }
+
+        .ios-segment-item .badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        
+        .tab-content {
+            display: none;
+            padding: 16px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        
+        .section {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ios-blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: var(--ios-blue);
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: var(--ios-gray-bg);
+            border-radius: var(--ios-radius-2);
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .info-item .value {
+            font-size: 14px;
+            color: var(--ios-text);
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .info-item .value.highlight {
+            color: var(--ios-blue);
+        }
+
+        .ai-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+            margin-top: 8px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--ios-gray-bg);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            background: var(--ios-blue);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--ios-blue);
+        }
+
+        .timeline-item .time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ios-text);
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .desc {
+            font-size: 13px;
+            color: var(--ios-gray);
+        }
+
+        
+        .overview-cards {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .overview-card {
+            flex: 1;
+            min-width: 100px;
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: 16px;
+            box-shadow: var(--ios-shadow-card);
+            border-top: 3px solid;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .overview-card.book {
+            border-top-color: var(--ios-blue);
+        }
+
+        .overview-card.digital {
+            border-top-color: var(--ios-purple);
+        }
+
+        .overview-card.journal {
+            border-top-color: var(--ios-green);
+        }
+
+        .overview-card:active {
+            transform: scale(0.98);
+        }
+
+        .overview-card-title {
+            font-size: 13px;
+            color: var(--ios-gray);
+            margin-bottom: 8px;
+        }
+
+        .overview-card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ios-blue);
+        }
+
+        .overview-card-meta {
+            font-size: 11px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 500px;
+        }
+
+        thead {
+            background: var(--ios-gray-bg);
+        }
+
+        th {
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ios-gray);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 0.5px solid var(--ios-separator-opaque);
+            word-break: break-word;
+        }
+
+        tr:active {
+            background: var(--ios-gray-bg);
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .risk-badge.high {
+            background: #f44336;
+            color: white;
+        }
+
+        .risk-badge.medium {
+            background: #ff9800;
+            color: white;
+        }
+
+        .sentiment-positive {
+            color: var(--ios-green);
+        }
+
+        .sentiment-negative {
+            color: var(--ios-red);
+        }
+
+        .sentiment-neutral {
+            color: var(--ios-gray);
+        }
+
+        
+        .risk-card {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .risk-card.risk-high {
+            background: rgba(255, 59, 48, 0.1);
+            border-left: 4px solid var(--ios-red);
+        }
+
+        .risk-card.risk-medium {
+            background: rgba(255, 149, 0, 0.1);
+            border-left: 4px solid var(--ios-orange);
+        }
+
+        .risk-card-content {
+            padding: 16px;
+        }
+
+        .risk-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ios-red);
+        }
+
+        .risk-card.risk-medium .risk-title {
+            color: var(--ios-orange);
+        }
+
+        .risk-meta {
+            font-size: 13px;
+            color: var(--ios-gray);
+            margin-top: 8px;
+        }
+
+        .risk-summary {
+            font-size: 14px;
+            color: var(--ios-text);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        
+        .sentiment-card {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--ios-shadow-card);
+        }
+
+        .sentiment-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ios-text);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .sentiment-meta {
+            font-size: 13px;
+            color: var(--ios-gray);
+        }
+
+        .sentiment-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .sentiment-tag.positive {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--ios-green);
+        }
+
+        .sentiment-tag.negative {
+            background: rgba(255, 59, 48, 0.1);
+            color: var(--ios-red);
+        }
+
+        .sentiment-tag.neutral {
+            background: var(--ios-gray-bg);
+            color: var(--ios-gray);
+        }
+
+        
+        .filter-section {
+            background: var(--ios-bg);
+            padding: 12px 16px;
+            border-radius: var(--ios-radius-3);
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: none;
+            border-radius: var(--ios-radius-2);
+            font-size: 14px;
+            background: var(--ios-gray-bg);
+            color: var(--ios-text);
+            min-width: 100px;
+        }
+
+        
+        .relation-card {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--ios-shadow-card);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .relation-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--ios-radius-2);
+            background: var(--ios-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .relation-info {
+            flex: 1;
+        }
+
+        .relation-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ios-text);
+        }
+
+        .relation-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--ios-blue);
+            margin-left: 8px;
+        }
+
+        .relation-meta {
+            font-size: 13px;
+            color: var(--ios-gray);
+            margin-top: 4px;
+        }
+
+        
+        .hidden-field {
+            filter: blur(4px);
+            user-select: none;
+        }
+
+        .hidden-field.visible {
+            filter: none;
+        }
+
+        .eye-icon {
+            cursor: pointer;
+            margin-left: 8px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .field-with-eye {
+            display: flex;
+            align-items: center;
+        }
+
+        
+        .correction-form {
+            background: var(--ios-bg);
+            border-radius: var(--ios-radius-3);
+            padding: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--ios-gray);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 16px;
+            border: none;
+            border-radius: var(--ios-radius-2);
+            font-size: 15px;
+            background: var(--ios-gray-bg);
+            color: var(--ios-text);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        
+        .ios-toolbar.profile-toolbar {
+            position: fixed;
+            bottom: calc(var(--apple-nav-height, 49px) + var(--apple-safe-area, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 428px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 0.5px solid rgba(60, 60, 67, 0.12);
+            padding: 8px 16px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 40;
+        }
+
+        
+        .text-block {
+            font-size: 14px;
+            color: var(--ios-gray);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        
+        .sub-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--ios-separator-opaque);
+            padding-bottom: 8px;
+        }
+
+        .sub-tab-btn {
+            padding: 6px 12px;
+            background: none;
+            border: none;
+            font-size: 13px;
+            color: var(--ios-gray);
+            cursor: pointer;
+            border-radius: var(--ios-radius-2);
+        }
+
+        .sub-tab-btn.active {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .sub-tab-content {
+            display: none;
+        }
+
+        .sub-tab-content.active {
+            display: block;
+        }
+
+        
+        .product-type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .product-type-badge.book {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--ios-blue);
+        }
+
+        .product-type-badge.ebook {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--ios-green);
+        }
+
+        .product-type-badge.audio {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--ios-orange);
+        }
+
+        
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--ios-blue);
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 8px;
+        }
+
+        
+        .match-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--ios-blue);
+            border-radius: var(--ios-radius-2);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="ios-header">
+        <div class="ios-header-btn left" onclick="goBack()">
+            <svg width="12" height="20" viewBox="0 0 12 20" fill="none">
+                <path d="M10 2L2 10L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span style="margin-left: 4px;">返回</span>
+        </div>
+        <div class="ios-header-title">作者画像</div>
+        <div class="ios-header-btn right"></div>
+    </div>
+
+    
+    <div class="profile-header">
+        <div class="avatar">张</div>
+        <div class="info-section">
+            <div class="name-row">
+                <span class="name">张悠慧</span>
+                <span class="tag">合作作者</span>
+                <span class="tag">教师</span>
+            </div>
+            <div class="info-meta">
+                <div class="info-meta-item">
+                    <label>所属单位：</label>
+                    <span>清华大学</span>
+                </div>
+                <div class="info-meta-item">
+                    <label>所属地区：</label>
+                    <span>其它</span>
+                </div>
+            </div>
+            <div class="info-meta">
+                <div class="info-meta-item">
+                    <label>职称等级：</label>
+                    <span>研究员</span>
+                </div>
+                <div class="info-meta-item">
+                    <label>学科：</label>
+                    <span>计算机科学与技术</span>
+                </div>
+                <div class="info-meta-item">
+                    <label>专业方向：</label>
+                    <span>计算机类</span>
+                </div>
+            </div>
+            <div class="info-meta" style="margin-top: 6px;">
+                <div class="info-meta-item">
+                    <label>数据来源：</label>
+                    <span>虚拟教研室</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="ios-segment-scroll">
+        <div class="ios-segment-control scrollable">
+            <div class="ios-segment-item scrollable active">基础信息</div>
+        </div>
+    </div>
+
+    
+    <div class="tab-content active" id="tab-basic">
+        
+        <div class="section">
+            <div class="section-title">基础信息</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>姓名</label>
+                    <div class="value">张悠慧</div>
+                </div>
+                <div class="info-item">
+                    <label>性别</label>
+                    <div class="value">女</div>
+                </div>
+                <div class="info-item">
+                    <label>出生年月</label>
+                    <div class="value">--<span class="ai-tag">AI采集</span></div>
+                </div>
+                <div class="info-item">
+                    <label>籍贯</label>
+                    <div class="value">--<span class="ai-tag">AI采集</span></div>
+                </div>
+                <div class="info-item">
+                    <label>学历</label>
+                    <div class="value">研究生<span class="ai-tag">AI采集</span></div>
+                </div>
+                <div class="info-item">
+                    <label>学位</label>
+                    <div class="value">其它<span class="ai-tag">AI采集</span></div>
+                </div>
+                <div class="info-item">
+                    <label>学术头衔</label>
+                    <div class="value highlight">--<span class="ai-tag">AI采集</span></div>
+                </div>
+                <div class="info-item">
+                    <label>工作单位</label>
+                    <div class="value">清华大学</div>
+                </div>
+                <div class="info-item">
+                    <label>联系电话</label>
+                    <div class="value field-with-eye">
+                        <span class="hidden-field" id="phoneField">139****0205</span>
+                        <span class="eye-icon" onclick="toggleField('phoneField')">👁️</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <label>工作邮箱</label>
+                    <div class="value field-with-eye">
+                        <span class="hidden-field" id="emailField">--</span>
+                        <span class="eye-icon" onclick="toggleField('emailField')">👁️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="section">
+            <div class="section-title">工作履历</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">2012年 - 至今</div>
+                    <div class="title">清华大学 · 高性能计算技术研究所 副所长</div>
+                    <div class="desc">从事高性能计算与类脑智能研究</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2006年 - 2007年</div>
+                    <div class="title">UC Berkeley 访问学者</div>
+                    <div class="desc">为期一年的学术访问</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2003年 - 2012年</div>
+                    <div class="title">清华大学信研院 · 微处理器中心 副主任</div>
+                    <div class="desc">微处理器与片上系统研发</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2002年</div>
+                    <div class="title">清华大学 · 高性能计算所 留任</div>
+                    <div class="desc">继续从事科研工作</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="section">
+            <div class="section-title">主要学术成就</div>
+            <div class="text-block">
+                2014年底以来围绕类脑智能开展类脑芯片与基础软件研究：针对类脑智能计算系统因缺乏完备性理论支撑而导致的层次接口模糊、软硬件紧耦合等问题，提出受神经网络计算特征启发的新的计算理论。
+                <br><br>
+                开展新型处理器微体系结构与类脑计算基础软硬件研究。主持设计并实现了具有自主产权的支持IA64体系架构的6个集群软件，这是国际上第一个完整开放源代码的IA64集群软件系统。本研究组作为创始成员创建了IA64软件开发联盟Gelato，公开发布上述软件。
+            </div>
+        </div>
+
+        
+        <div class="section">
+            <div class="section-title">获奖与荣誉</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">2018年</div>
+                    <div class="title">高等教育国家级教学成果奖二等奖</div>
+                    <div class="desc">面向计算机系统能力培养的课程体系改革</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2017年</div>
+                    <div class="title">北京市高等教育教学成果奖一等奖</div>
+                    <div class="desc">课程体系改革成果</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2020年</div>
+                    <div class="title">指导博士生获CCF优秀博士学位论文奖</div>
+                    <div class="desc">清华大学优秀博士毕业生</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="ios-toolbar profile-toolbar">
+        <button class="ios-btn-capsule gray small" onclick="goBack()">返回</button>
+        <button class="ios-btn-capsule secondary small" onclick="viewUniversity()">查看单位</button>
+    </div>
+
+    
+    <nav class="ios-tab-nav">
+        <a href="teacher-list.html" class="ios-tab-item active" data-tab="teachers">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">作者检索</div>
+        </a>
+        <a href="university-list.html" class="ios-tab-item" data-tab="universities">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">高校检索</div>
+        </a>
+        <a href="warning-management.html" class="ios-tab-item" data-tab="warnings">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">预警管理</div>
+        </a>
+        <a href="my.html" class="ios-tab-item" data-tab="my">
+            <div class="ios-tab-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="ios-tab-label">我的</div>
+        </a>
+    </nav>
+
+    
+    <script src="js/ios-navigation.js"></script>
+    <script src="js/gesture-handler.js"></script>
+
+    <script>
+        
+        function goBack() {
+            history.back();
+        }
+
+        
+        function toggleField(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.classList.toggle('hidden');
+            field.classList.toggle('visible');
+        }
+
+        
+        function viewUniversity() {
+            window.location.href = 'university-profile.html?id=' + encodeURIComponent('清华大学');
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (id) {
+                console.log('加载作者画像数据，ID:', id);
+            }
+        });
+    </script>
+</body>
+</html>
