@@ -95,9 +95,44 @@ function setExportUserRole(role) {
     }
 }
 
+/**
+ * 处理导出按钮点击事件
+ * 显示导出弹窗
+ */
+function handleExportClick() {
+    const exportModal = document.getElementById('exportModal');
+    if (!exportModal) {
+        console.error('导出弹窗元素不存在');
+        return;
+    }
+
+    // 获取当前数据
+    const dataCount = window.allData ? window.allData.length : 100;
+    const defaultCount = Math.min(dataCount, 1000);
+
+    const exportCountInput = document.getElementById('exportCount');
+    if (exportCountInput) {
+        exportCountInput.value = defaultCount;
+    }
+
+    exportModal.classList.add('show');
+}
+
+/**
+ * 关闭导出弹窗
+ */
+function closeExportModal() {
+    const exportModal = document.getElementById('exportModal');
+    if (exportModal) {
+        exportModal.classList.remove('show');
+    }
+}
+
 // 导出（供其他模块使用）
 window.hasExportPermission = hasExportPermission;
 window.initExportBtn = initExportBtn;
 window.setExportUserRole = setExportUserRole;
 window.teacherExportFields = teacherExportFields;
 window.universityExportFields = universityExportFields;
+window.handleExportClick = handleExportClick;
+window.closeExportModal = closeExportModal;
