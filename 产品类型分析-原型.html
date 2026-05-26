@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品类型分析 - 深度分析版</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #000; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; font-family: 'Source Han Sans CN', sans-serif; }
+
+/* 容器 */
+.container { width: 900px; height: 180px; background: rgba(10, 31, 61, 0.6); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 4px; padding: 10px 15px; }
+
+/* 标题 */
+.header { display: flex; align-items: center; margin-bottom: 8px; }
+.header-icon { width: 18px; height: 18px; background: rgba(0, 229, 255, 0.2); border-radius: 2px; margin-right: 8px; }
+.title { font-size: 14px; color: #fff; font-weight: bold; }
+
+/* 主内容 */
+.main { display: flex; gap: 15px; height: calc(100% - 26px); }
+
+/* 左侧统计区 */
+.stats-area { width: 180px; display: flex; flex-direction: column; gap: 5px; }
+
+/* 产品总数卡片 */
+.total-card { background: rgba(0, 229, 255, 0.12); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 3px; padding: 8px; text-align: center; }
+.total-label { font-size: 10px; color: #b8c7d9; }
+.total-value { font-size: 22px; font-weight: bold; color: #00e5ff; }
+.total-unit { font-size: 10px; color: #7a8fa3; }
+
+/* 类型统计卡片 - 可点击 */
+.stat-card { display: flex; align-items: center; justify-content: space-between; background: rgba(0, 229, 255, 0.08); border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 3px; padding: 6px 10px; cursor: pointer; transition: all 0.3s; }
+.stat-card:hover { background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.4); }
+.stat-card.active { background: rgba(0, 229, 255, 0.2); border-color: #00e5ff; }
+
+/* 图标 - 使用色块代替emoji */
+.stat-icon { width: 18px; height: 18px; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+.stat-icon.book { background: linear-gradient(135deg, #0066cc, #00e5ff); }
+.stat-icon.audio { background: linear-gradient(135deg, #ff6b6b, #ffd93d); }
+.stat-icon.electronic { background: linear-gradient(135deg, #4d96ff, #38ffc0); }
+
+.stat-info { flex: 1; display: flex; align-items: center; gap: 8px; }
+.stat-name { font-size: 11px; color: #b8c7d9; }
+.stat-count { font-size: 14px; font-weight: bold; color: #00e5ff; }
+.stat-unit { font-size: 10px; color: #7a8fa3; margin-left: 1px; }
+.stat-rate { font-size: 10px; color: #38ffc0; }
+
+/* 右侧图表区 */
+.chart-area { flex: 1; display: flex; gap: 12px; }
+
+/* 环形图容器 */
+.pie-wrap { width: 150px; height: 100%; position: relative; }
+.pie-title { position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 10px; color: #b8c7d9; }
+.pie-chart { width: 100%; height: 100%; }
+
+/* 趋势图容器 */
+.trend-wrap { flex: 1; height: 100%; position: relative; }
+.trend-title { position: absolute; top: 0; left: 10px; font-size: 10px; color: #b8c7d9; }
+.trend-chart { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- 标题 -->
+  <div class="header">
+    <div class="header-icon"></div>
+    <div class="title">产品类型分析</div>
+  </div>
+
+  <!-- 主内容 -->
+  <div class="main">
+    <!-- 左侧统计区 -->
+    <div class="stats-area">
+      <div class="total-card">
+        <div class="total-label">产品总数</div>
+        <div class="total-value">122<span class="total-unit">个</span></div>
+      </div>
+
+      <div class="stat-card active" id="card-book" onclick="selectType('book')">
+        <div class="stat-icon book"></div>
+        <div class="stat-info">
+          <span class="stat-name">图书</span>
+          <span class="stat-count">84<span class="stat-unit">本</span></span>
+        </div>
+        <span class="stat-rate">69.4%</span>
+      </div>
+
+      <div class="stat-card" id="card-audio" onclick="selectType('audio')">
+        <div class="stat-icon audio"></div>
+        <div class="stat-info">
+          <span class="stat-name">音像制品</span>
+          <span class="stat-count">37<span class="stat-unit">个</span></span>
+        </div>
+        <span class="stat-rate">30.3%</span>
+      </div>
+
+      <div class="stat-card" id="card-electronic" onclick="selectType('electronic')">
+        <div class="stat-icon electronic"></div>
+        <div class="stat-info">
+          <span class="stat-name">电子出版物</span>
+          <span class="stat-count">1<span class="stat-unit">个</span></span>
+        </div>
+        <span class="stat-rate">0.8%</span>
+      </div>
+    </div>
+
+    <!-- 右侧图表区 -->
+    <div class="chart-area">
+      <!-- 环形图 -->
+      <div class="pie-wrap">
+        <div class="pie-title">类型分布</div>
+        <div id="pieChart" class="pie-chart"></div>
+      </div>
+
+      <!-- 趋势图 -->
+      <div class="trend-wrap">
+        <div class="trend-title">年度趋势</div>
+        <div id="trendChart" class="trend-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/**
+ * 产品类型分析 - 深度分析版（修复版）
+ *
+ * 功能改进：
+ * 1. 左侧卡片可点击，与环形图联动
+ * 2. 环形图悬浮放大效果
+ * 3. 柱状图悬浮高亮
+ * 4. 图表标题添加
+ * 5. 图标使用色块代替emoji
+ */
+
+// 产品类型数据
+var typeData = [
+  { value: 84, name: '图书', code: 'book', itemStyle: { color: '#00e5ff' } },
+  { value: 37, name: '音像制品', code: 'audio', itemStyle: { color: '#ff6b6b' } },
+  { value: 1, name: '电子出版物', code: 'electronic', itemStyle: { color: '#38ffc0' } }
+];
+
+// 年度趋势数据
+var yearData = [
+  { year: '2003', count: 1 }, { year: '2004', count: 5 }, { year: '2005', count: 3 },
+  { year: '2006', count: 1 }, { year: '2007', count: 1 }, { year: '2008', count: 2 },
+  { year: '2009', count: 2 }, { year: '2010', count: 19 }, { year: '2011', count: 6 },
+  { year: '2012', count: 0 }, { year: '2013', count: 1 }, { year: '2014', count: 6 },
+  { year: '2015', count: 0 }, { year: '2016', count: 2 }, { year: '2017', count: 1 },
+  { year: '2018', count: 2 }, { year: '2019', count: 3 }, { year: '2020', count: 1 },
+  { year: '2021', count: 3 }, { year: '2022', count: 1 }, { year: '2023', count: 1 },
+  { year: '2024', count: 2 }, { year: '2025', count: 2 }
+];
+
+// 当前选中类型
+var currentType = 'book';
+
+// 环形图
+var pieChart = echarts.init(document.getElementById('pieChart'));
+pieChart.setOption({
+  tooltip: {
+    trigger: 'item',
+    formatter: function(params) {
+      var unit = params.name === '图书' ? '本' : '个';
+      return params.name + ': ' + params.value + unit + ' (' + params.percent.toFixed(1) + '%)';
+    },
+    backgroundColor: 'rgba(10, 31, 61, 0.95)',
+    borderColor: '#00e5ff',
+    borderWidth: 1,
+    textStyle: { color: '#00e5ff', fontSize: 11 }
+  },
+  series: [{
+    type: 'pie',
+    radius: ['40%', '65%'],
+    center: ['50%', '55%'],
+    avoidLabelOverlap: false,
+    label: { show: false },
+    labelLine: { show: false },
+    data: typeData,
+    emphasis: {
+      scale: true,
+      scaleSize: 8,
+      itemStyle: {
+        shadowBlur: 10,
+        shadowColor: 'rgba(0, 229, 255, 0.5)'
+      }
+    },
+    select: {
+      scale: true,
+      scaleSize: 5,
+      itemStyle: {
+        borderColor: '#00e5ff',
+        borderWidth: 2
+      }
+    },
+    selectedMode: 'single'
+  }]
+});
+
+// 趋势图 - 展示整体产出节奏
+var trendChart = echarts.init(document.getElementById('trendChart'));
+trendChart.setOption({
+  tooltip: {
+    trigger: 'axis',
+    formatter: function(params) {
+      var d = params[0];
+      var year = d.name;
+      var count = d.value || 0;
+      var tip = year + '年: ' + count + '个产品';
+      // 高峰年份标注
+      if (count >= 15) {
+        tip += '\n[高峰期]';
+      }
+      return tip;
+    },
+    backgroundColor: 'rgba(10, 31, 61, 0.95)',
+    borderColor: '#00e5ff',
+    borderWidth: 1,
+    textStyle: { color: '#00e5ff', fontSize: 11 },
+    axisPointer: {
+      type: 'shadow',
+      shadowStyle: { color: 'rgba(0, 229, 255, 0.15)' }
+    }
+  },
+  grid: { left: '35', right: '10', top: '18', bottom: '18' },
+  xAxis: {
+    type: 'category',
+    data: yearData.map(function(d) { return d.year; }),
+    axisLine: { lineStyle: { color: 'rgba(0, 229, 255, 0.3)' } },
+    axisLabel: { color: '#b8c7d9', fontSize: 8, interval: 3 },
+    axisTick: { show: false }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: { show: false },
+    axisLabel: { color: '#b8c7d9', fontSize: 8 },
+    splitLine: { lineStyle: { color: 'rgba(0, 229, 255, 0.1)' } },
+    min: 0,
+    max: 20
+  },
+  series: [{
+    type: 'bar',
+    data: yearData.map(function(d) {
+      // 高峰年份（>=15）使用特殊颜色
+      return {
+        value: d.count,
+        itemStyle: d.count >= 15 ? {
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: '#38ffc0' },
+              { offset: 1, color: 'rgba(56, 255, 192, 0.3)' }
+            ]
+          }
+        } : {
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: '#00e5ff' },
+              { offset: 1, color: 'rgba(0, 229, 255, 0.2)' }
+            ]
+          }
+        }
+      };
+    }),
+    barWidth: 10,
+    itemStyle: {
+      borderRadius: [2, 2, 0, 0]
+    },
+    emphasis: {
+      itemStyle: {
+        color: '#00e5ff',
+        shadowBlur: 10,
+        shadowColor: 'rgba(0, 229, 255, 0.5)'
+      }
+    }
+  }],
+  // 标记高峰年份
+  markPoint: {
+    symbol: 'pin',
+    symbolSize: 30,
+    data: [
+      { coord: ['2010', 19], name: '高峰', itemStyle: { color: '#38ffc0' }, label: { show: true, formatter: '高峰', color: '#fff', fontSize: 8 } }
+    ]
+  }
+});
+
+// 点击类型卡片 - 联动环形图
+function selectType(type) {
+  currentType = type;
+
+  // 更新卡片状态
+  document.querySelectorAll('.stat-card').forEach(function(card) {
+    card.classList.remove('active');
+  });
+  document.getElementById('card-' + type).classList.add('active');
+
+  // 高亮环形图对应扇区
+  var typeIndex = typeData.findIndex(function(d) { return d.code === type; });
+  pieChart.dispatchAction({
+    type: 'select',
+    seriesIndex: 0,
+    dataIndex: typeIndex
+  });
+}
+
+// 初始选中图书
+pieChart.dispatchAction({
+  type: 'select',
+  seriesIndex: 0,
+  dataIndex: 0
+});
+
+// 窗口resize
+window.addEventListener('resize', function() {
+  pieChart.resize();
+  trendChart.resize();
+});
+</script>
+</body>
+</html>
