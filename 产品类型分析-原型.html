@@ -7,7 +7,21 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #000; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; font-family: 'Source Han Sans CN', sans-serif; }
+body { background: #000; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; font-family: 'Source Han Sans CN', sans-serif; }
+
+/* 统计说明 */
+.stats-note {
+  width: 900px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  padding: 12px 15px;
+  background: rgba(0, 40, 80, 0.5);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 4px;
+}
+.stats-note strong { color: #00e5ff; font-size: 14px; }
 
 /* 容器 */
 .container { width: 900px; height: 180px; background: rgba(10, 31, 61, 0.6); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 4px; padding: 10px 15px; }
@@ -61,6 +75,11 @@ body { background: #000; min-height: 100vh; display: flex; align-items: center; 
 </style>
 </head>
 <body>
+<!-- 统计说明 -->
+<div class="stats-note">
+  <strong>产品类型分析各区域统计说明：</strong>左侧产品总数卡片统计该作者所有出版物的总数量，涵盖图书、音像制品、电子出版物三种类型。三个类型统计卡片分别统计各类型产品的数量及占总数的百分比，单位区分显示（图书为"本"，音像制品和电子出版物为"个"）。右侧环形图可视化展示三种产品类型的占比分布。年度趋势柱状图按年份聚合统计各年度发布的产品总数（三种类型合并），反映整体产出节奏，高峰年份以绿色高亮标记。数据来源：/api/author-persona/books API。
+</div>
+
 <div class="container">
   <!-- 标题 -->
   <div class="header">
